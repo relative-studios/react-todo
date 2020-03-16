@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { Form, InputGroup, FormControl, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addTodo } from '../store/actions/todoActions';
 
 /* eslint-disable no-unused-expressions */
-export default class AddTodo extends Component {
+class AddTodo extends Component {
   constructor(props) {
     super(props);
     this.inputValue = React.createRef();
@@ -22,24 +25,18 @@ export default class AddTodo extends Component {
   addTodo(e) {
     // stop page from reloading after submit
     e.preventDefault();
-    console.log(this.state.todoValue);
     
     // build new todo object
     const todo = {
       userId: 1,
       title: this.state.todoValue,
-      completed: false
+      completed: false,
+      id: Date.now()
     }
 
-    fetch('https://jsonplaceholder.typicode.com/todos', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(todo)
-    })
-    .then(res =>res.json())
-    .then(data => console.log(data));
+    console.log(todo);
+
+    this.props.addTodo(todo);
   }
 
   render() {
@@ -63,3 +60,9 @@ export default class AddTodo extends Component {
     )
   }
 }
+
+AddTodo.propTypes = {
+  addTodo: PropTypes.func.isRequired
+}
+
+export default connect(null, { addTodo })(AddTodo);

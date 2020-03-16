@@ -1,28 +1,26 @@
 import React, { Component } from 'react'
 import './Todos.scss';
-
+import PropTypes from 'prop-types';
 import TodoItem from './TodoItem';
 import AddTodo from './AddTodo';
+import { connect } from 'react-redux';
+import { fetchTodos } from '../store/actions/todoActions';
 
 class Todos extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: []
+  // lifecycle methods
+  componentDidMount() {
+    this.props.fetchTodos();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // this lifecycle gets called if any new props are received in the component
+    if (nextProps.newTodo) {
+      this.props.todos.unshift(nextProps.newTodo);
     }
   }
 
-  componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/todos')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      this.setState({todos: data});
-    })
-  }
-
   render() {
-    const todoItems = Array.from(this.state.todos).map(todo => (
+    const todoItems = Array.from(this.props.todos).map(todo => (
       <TodoItem key={todo.id} todo={todo} />
     ));
 
@@ -35,4 +33,16 @@ class Todos extends Component {
   }
 }
 
-export default Todos;
+Todos.propTypes = {
+  fetchTodos: PropTypes.func.isRequired,
+  todos: PropTypes.array.isRequired,
+  newTodo: PropTypes.object
+}
+
+// setting state for app
+const mapStateToProps = state => ({
+  todos: state.todos.todos,
+  newTodo: state.todos.todo
+})
+
+export default connect(mapStateToProps, { fetchTodos })(Todos);
