@@ -36,6 +36,7 @@ function AddTodo() {
     setTodoValue('');
   }
 
+  // Render the component
   return (
     <div>
       <h3>Add Todo</h3>

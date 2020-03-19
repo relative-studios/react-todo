@@ -52,7 +52,8 @@ Todos.propTypes = {
 // setting state for app
 const mapStateToProps = state => ({
   todos: state.todos.todos,
-  todo: state.todos.todo
+  todo: state.todos.todo,
+  id: state.todos.id
 })
 
 export default connect(mapStateToProps, { fetchTodos })(Todos);
