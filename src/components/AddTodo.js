@@ -1,68 +1,59 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Form, InputGroup, FormControl, Button } from 'react-bootstrap';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addTodo } from '../store/actions/todoActions';
 
-/* eslint-disable no-unused-expressions */
-class AddTodo extends Component {
-  constructor(props) {
-    super(props);
-    this.inputValue = React.createRef();
-    this.state = {
-      todoValue: ''
-    }
+function AddTodo() {
+  // gives us access to dispatch actions
+  const dispatch = useDispatch();
 
-    this.updateTodo = this.updateTodo.bind(this);
-    this.addTodo = this.addTodo.bind(this);
+  // tracks value of input as a ref
+  const inputValue = React.createRef();
+
+  // sets initial state of todoValue
+  const [todoValue, setTodoValue] = useState('');
+
+  const updateTodo = () => {
+    // sets state of todoValue to current value in inputValue
+    setTodoValue(inputValue.current.value);
   }
 
-  updateTodo() {
-    // binding input value to state.todoValue
-    this.setState({todoValue: this.inputValue.current.value});
-  }
-
-  addTodo(e) {
-    // stop page from reloading after submit
-    e.preventDefault();
-    
-    // build new todo object
+  const handleAddTodo = () => {
+    // build new todo object based on todoValue state
     const todo = {
-      userId: 1,
-      title: this.state.todoValue,
-      completed: false,
-      id: Date.now()
+      groupId: 1,
+      id: Date.now(),
+      title: todoValue,
+      completed: false
+    };
+
+    // any todo should be at least 3 characters long
+    if (todoValue.length > 3) {
+      dispatch(addTodo(todo));
     }
 
-    console.log(todo);
-
-    this.props.addTodo(todo);
+    // resets state of todoValue to be blank
+    setTodoValue('');
   }
 
-  render() {
-    return (
-      <div>
-        <h3>Add Todo</h3>
-        <Form onSubmit={this.addTodo}>
-          <InputGroup className="rounded-0 border-bottom border-secondary custom-form-group mb-3">
-            <FormControl
-              placeholder="Todo Description" 
-              aria-label="Todo Description"
-              ref={this.inputValue} type="text" onChange={this.updateTodo}
-              value={this.state.updateTodo}
-            />
-            <InputGroup.Append >
-              <Button variant="outline-none" type="submit">Add Todo</Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </Form>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <h3>Add Todo</h3>
+      <Form>
+        <InputGroup className="rounded-0 border-bottom border-secondary custom-form-group mb-3">
+          <FormControl
+            placeholder="Todo Description" 
+            aria-label="Todo Description"
+            ref={inputValue} type="text" onChange={updateTodo}
+            value={todoValue}
+          />
+          <InputGroup.Append >
+            <Button variant="outline-none" onClick={handleAddTodo}>Add Todo</Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </Form>
+    </div>
+  )
 }
 
-AddTodo.propTypes = {
-  addTodo: PropTypes.func.isRequired
-}
-
-export default connect(null, { addTodo })(AddTodo);
+export default AddTodo;

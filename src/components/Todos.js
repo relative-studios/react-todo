@@ -7,16 +7,17 @@ import { connect } from 'react-redux';
 import { fetchTodos } from '../store/actions/todoActions';
 
 class Todos extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      todos: this.props.todos,
+      todo: this.props.todo
+    }
+  }
   // lifecycle methods
   componentDidMount() {
     this.props.fetchTodos();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // this lifecycle gets called if any new props are received in the component
-    if (nextProps.newTodo) {
-      this.props.todos.unshift(nextProps.newTodo);
-    }
   }
 
   render() {
@@ -36,13 +37,13 @@ class Todos extends Component {
 Todos.propTypes = {
   fetchTodos: PropTypes.func.isRequired,
   todos: PropTypes.array.isRequired,
-  newTodo: PropTypes.object
+  todo: PropTypes.object
 }
 
 // setting state for app
 const mapStateToProps = state => ({
   todos: state.todos.todos,
-  newTodo: state.todos.todo
+  todo: state.todos.todo
 })
 
 export default connect(mapStateToProps, { fetchTodos })(Todos);
