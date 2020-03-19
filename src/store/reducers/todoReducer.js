@@ -1,4 +1,4 @@
-import { FETCH_TODOS, ADD_TODO, CHECK_TODO } from './types';
+import { FETCH_TODOS, ADD_TODO, CHECK_TODO, REMOVE_TODO } from './types';
 
 // initial global states
 const intitialState = {
@@ -30,6 +30,12 @@ export default function(state = intitialState, action) {
       return {
         ...state,
         id: action.payload
+      }
+    case REMOVE_TODO:
+      state.todos = state.todos.filter(todo => todo.id !== action.payload)
+      return {
+        ...state,
+        id: action.paylaod
       }
 
     // gotta have a default or the console will complain

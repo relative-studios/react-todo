@@ -36,12 +36,14 @@ function AddTodo() {
     setTodoValue('');
   }
 
+  console.log(todoValue);
+
   // Render the component
   return (
     <div>
       <h3>Add Todo</h3>
       <Form>
-        <InputGroup className="rounded-0 border-bottom border-secondary custom-form-group mb-3">
+        <InputGroup className="rounded-0 custom-form-group mb-3">
           <FormControl
             placeholder="Todo Description" 
             aria-label="Todo Description"
@@ -49,7 +51,7 @@ function AddTodo() {
             value={todoValue}
           />
           <InputGroup.Append >
-            <Button variant="outline-none" onClick={handleAddTodo}>Add Todo</Button>
+            <Button variant="outline-none" className={"btn rounded " + (todoValue.length > 3 ? 'btn-primary' : 'btn-outline-none')} onClick={handleAddTodo}>Add Todo</Button>
           </InputGroup.Append>
         </InputGroup>
       </Form>
