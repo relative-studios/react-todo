@@ -27,8 +27,9 @@ class Todos extends Component {
     this.props.fetchTodos();
   }
 
+  // render the component
   render() {
-    // When component renders, a new todoItems array gets built from store todos value
+    // when component renders, a new todoItems array gets built from store todos value
     const todoItems = Array.from(this.props.todos).map(todo => (
       <TodoItem key={todo.id} todo={todo} />
     ));
@@ -42,6 +43,7 @@ class Todos extends Component {
   }
 }
 
+// validate prop types 
 Todos.propTypes = {
   fetchTodos: PropTypes.func.isRequired,
   todos: PropTypes.array.isRequired,

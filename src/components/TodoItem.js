@@ -15,7 +15,7 @@ function TodoItem(props) {
     setIsChecked(props.todo.completed);
   };
 
-  // Render the component
+  // render the component
   return (
     <div>
       <p className="todo-text" >{props.todo.title} &nbsp;
