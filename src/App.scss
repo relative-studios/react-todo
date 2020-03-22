@@ -5,6 +5,26 @@
   margin: 0;
 }
 
+body {
+  background: #ededed;
+  overflow-x: hidden;
+}
+
 .App {
-  background: white;
+  margin-bottom: 56px;
+}
+
+.heading {
+  border-bottom: 15px solid #ededed;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+#sticky-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
