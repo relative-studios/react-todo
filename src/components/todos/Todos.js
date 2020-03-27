@@ -25,15 +25,23 @@ class Todos extends Component {
     });
   }
 
+
   renderTodoItems = () => {
     let todos = [];
-
+    
     // Slicing to only show first 10 results for now
     this.state.todos.slice(0, 10).forEach((todo) => {
-      todos.push(<TodoItem key={todo.id} todo={todo} />);
+      todos.push(<TodoItem key={todo.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem}/>);
     });
-
     return todos;
+  }
+
+  handleDeleteTodoItem = (id) => {
+    this.setState( prevState => {
+        return {
+          todos: prevState.todos.filter(p => p.userId === 1 && p.id !== id)
+        };
+    });
   }
 
   // render the component
@@ -48,6 +56,7 @@ class Todos extends Component {
             <div className="col-12">
               <div className="mx-3 mx-sm-0">
                 {this.renderTodoItems()}
+                {console.log(this.state.todos[0])}
               </div>
             </div>
           </div>
