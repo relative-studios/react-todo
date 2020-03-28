@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
+import AddTodo from '../AddTodo';
 import './Todos.scss';
 
 class Todos extends Component {
@@ -40,6 +41,7 @@ class Todos extends Component {
   render() {
     return (
       <div className="w-100">
+        <AddTodo />
         <div className="py-3 bg-primary text-white text-center">
           <h1 className="mb-0">TODOS</h1>
         </div>
