@@ -1,45 +1,89 @@
 import React, { Component } from 'react'
-import './Todos.scss';
 import PropTypes from 'prop-types';
-import TodoItem from './TodoItem';
-import AddTodo from './AddTodo';
 import { connect } from 'react-redux';
-import { fetchTodos } from '../store/actions/todoActions';
-
-// First cut for Develop, this comment will be removed after first feature branch is merged in.
+import TodoItem from './TodoItem';
+import './Todos.scss';
+import AddTodo from './AddTodo';
 
 class Todos extends Component {
-  constructor(props) {
-    super(props);
-
-    /* 
-      Since rendering gets triggered on state changes, we are setting the component state
-      to be the same as the store equivalent values. This means that when any of the store
-      values change, the todos component will re-render. 
-    */
-    this.state = {
-      todos: this.props.todos,
-      todo: this.props.todo,
-      id: this.props.id
-    }
+  state = {
+    todos: this.props.todos
   }
 
-  // fires fetchTodos action after component mounts
   componentDidMount() {
-    this.props.fetchTodos();
+    this.getTodoItems();
+  }
+
+  getTodoItems = () => {
+    fetch('https://jsonplaceholder.typicode.com/todos/')
+    .then(res => res.json())
+    .then(todos => {
+      const todoItems = !Array.isArray(todos) ? new Array(todos) : todos;
+      this.setState({ todos: todoItems })
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+
+  renderTodoItems = () => {
+    let todos = [];
+    
+    // Slicing to only show first 10 results for now
+    this.state.todos.slice(0, 10).forEach((todo) => {
+      todos.push(<TodoItem key={todo.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem}/>);
+    });
+    return todos;
+  }
+
+  handleDeleteTodoItem = (id) => {
+    this.setState( prevState => {
+        return {
+          todos: prevState.todos.filter(p => p.userId === 1 && p.id !== id)
+        };
+    });
+  }
+
+  handleAddTodoItem = (task) => {
+    let arrayLengthIndex = (this.state.todos.length);
+
+    this.setState( prevState => {
+      return {
+        todos: [
+          {
+            key: arrayLengthIndex+1,
+            userId: 1,
+            id: arrayLengthIndex+1,
+            title: task,
+            completed: false
+          },
+          ...prevState.todos
+        ]
+      }
+      
+    })
   }
 
   // render the component
   render() {
-    // when component renders, a new todoItems array gets built from store todos value
-    const todoItems = Array.from(this.props.todos).map(todo => (
-      <TodoItem key={todo.id} todo={todo} />
-    ));
-
     return (
-      <div>
-        <AddTodo />
-        {todoItems}
+      <div className="w-100">
+        <div className="py-3 bg-primary text-white text-center">
+          <h1 className="mb-0">TODOS</h1>
+        </div>
+        <div className = "my-3 py-2 bg-white text-center">
+          <AddTodo addTodoItem = {this.handleAddTodoItem}/>
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="mx-3 mx-sm-0">
+                {this.renderTodoItems()}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
@@ -47,17 +91,12 @@ class Todos extends Component {
 
 // validate prop types 
 Todos.propTypes = {
-  fetchTodos: PropTypes.func.isRequired,
-  todos: PropTypes.array.isRequired,
-  todo: PropTypes.object,
-  id: PropTypes.number
+  todos: PropTypes.array.isRequired
 }
 
 // setting state for app
 const mapStateToProps = state => ({
-  todos: state.todos.todos,
-  todo: state.todos.todo,
-  id: state.todos.id
-})
+  todos: state.todos.todos
+});
 
-export default connect(mapStateToProps, { fetchTodos })(Todos);
+export default connect(mapStateToProps, {})(Todos);
