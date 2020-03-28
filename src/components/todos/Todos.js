@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
@@ -15,14 +15,14 @@ class Todos extends Component {
 
   getTodoItems = () => {
     fetch('https://jsonplaceholder.typicode.com/todos/')
-    .then(res => res.json())
-    .then(todos => {
-      const todoItems = !Array.isArray(todos) ? new Array(todos) : todos;
-      this.setState({ todos: todoItems })
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(res => res.json())
+      .then(todos => {
+        const todoItems = !Array.isArray(todos) ? new Array(todos) : todos;
+        this.setState({ todos: todoItems })
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   renderTodoItems = () => {

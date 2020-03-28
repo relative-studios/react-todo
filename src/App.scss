@@ -1,3 +1,17 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+$theme-colors: (
+  "primary": #20a4f3,
+  "secondary": #223843,
+  "success": #3ab795,
+  "warning": #ffd97d,
+  "info": #2ec4b6,
+  "danger": #ff3366,
+  "light": #bfc3ba
+);
+
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 * {
