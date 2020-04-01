@@ -27,6 +27,7 @@ const AddTodo = ({addTodoItem}) => {
             type="submit"
             value="Add task"
           />
+          <div></div>
         </div>
       </div>
     </form>
