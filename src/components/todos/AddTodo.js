@@ -24,6 +24,7 @@ class AddTodo  extends Component {
       e.preventDefault();
       addTodoItem(userInput.current.value);
       e.currentTarget.reset();
+      handleIsValid();
     }
 
     return (
