@@ -9,7 +9,7 @@ class AddTodo  extends Component {
     const {addTodoItem}=this.props;
     let userInput = React.createRef();
 
-    let handleIsValid = () => {
+    const handleIsValid = () => {
       let validUserInput = userInput.current.value;
       
       if(validUserInput.length <= 3){
@@ -20,7 +20,7 @@ class AddTodo  extends Component {
       } 
     }
 
-    let handleSubmit = (e) => {
+    const handleSubmit = (e) => {
       e.preventDefault();
       addTodoItem(userInput.current.value);
       e.currentTarget.reset();
