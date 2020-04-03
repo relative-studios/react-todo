@@ -1,15 +1,14 @@
 import React from 'react';
-
-import Todos from './components/Todos';
+import Todos from './components/todos/Todos';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 
 function App() {
   return (
     <div className="App">
-      <div className="container">
-        <div className="row">
-          <Todos />
-        </div>
-      </div>
+      <Header />
+      <Todos />
+      <Footer />
     </div>
   );
 }
