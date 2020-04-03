@@ -28,6 +28,10 @@ body {
   margin-bottom: 56px;
 }
 
+.disabled {
+  cursor: default;
+}
+
 .heading {
   border-bottom: 15px solid #ededed;
 }
