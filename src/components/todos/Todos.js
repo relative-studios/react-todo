@@ -66,6 +66,12 @@ class Todos extends Component {
     })
   }
 
+
+  /*
+  HANDLE EDIT TODO ITEM
+  HANDLE EDIT TODO ITEM
+  */
+
   // render the component
   render() {
     return (

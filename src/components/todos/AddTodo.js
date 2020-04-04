@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-class AddTodo  extends Component {
+class AddTodo extends Component {
   state = {
     isDisabled: true
   };
