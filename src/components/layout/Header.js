@@ -9,9 +9,9 @@ function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="text-white mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Todos</Nav.Link>
-            <Nav.Link href="#link">Calendar</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/todos">Todos</Nav.Link>
+            <Nav.Link href="#">Calendar</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
