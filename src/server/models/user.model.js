@@ -10,9 +10,25 @@ const userSchema = new Schema({
     trim: true,
     minLength: 7
   },
-  todos: {
-    type: Array,
-    required: false
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true
   }
 }, {
   collection: 'users',

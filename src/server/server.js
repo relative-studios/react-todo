@@ -2,11 +2,14 @@
 const cors = require('cors'); 
 const express = require ('express'); 
 const mongoose = require('mongoose');
+const bodyParser = require("body-parser");
+const passport = require("passport");
 
 
 // ROUTE IMPORTS
-const userRouter = require('./routes/users');
-const todosRouter = require('./routes/todos');
+const dashboardRouter = require('./routes/api/dashboard');
+const userRouter = require('./routes/api/users');
+const todosRouter = require('./routes/api/todos');
 
 require('dotenv').config();
 
@@ -22,9 +25,19 @@ app.use(cors());
 app.use(express.json());
 
 
+// BODY PARSER MIDDLEWARE
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
+app.use(bodyParser.json());
+
+
 // ROUTES
-app.use('/', userRouter);
-app.use('/todos', todosRouter);
+app.use('/api/', dashboardRouter);
+app.use('/api/users', userRouter);
+app.use('/api/todos', todosRouter);
 
 
 // MONGOOSE
@@ -40,6 +53,11 @@ mongoose.connect(
 connection.once('open', () => {
   console.log('Database connection established');
 });
+
+
+// PASSPORT
+app.use(passport.initialize());
+require("./config/passport")(passport);
 
 
 // LISTEN
