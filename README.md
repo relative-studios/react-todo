@@ -33,7 +33,9 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Connecting To Databse
 
-Add username and Password provided by Lead developer to ATLAS_URI in .env file. Then run the command:
+Add username and Password provided by Lead developer to ATLAS_URI in .env file.
+
+In a new terminal, change directory to /server Then run the command:
 
 ### `nodemon server`
 
