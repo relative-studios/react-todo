@@ -29,9 +29,9 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.<br />
 
-## `Connecting To Databse`
+## Connecting To Databse
 
 Add username and Password provided by Lead developer to ATLAS_URI in .env file. Then run the command:
 
