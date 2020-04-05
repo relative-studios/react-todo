@@ -31,10 +31,10 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-
 ## `Connecting To Databse`
 
-Add username and Password provided by Lead developer to ATLAS_URI in .env file. Then:
-### `nodemon server`
-To start up the back end server and test connection
+Add username and Password provided by Lead developer to ATLAS_URI in .env file. Then run the command:
 
+### `nodemon server`
+
+To start up the back end server and test the database connection.
