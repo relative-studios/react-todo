@@ -13,13 +13,13 @@ class TodoItem extends Component {
 
   render(){
 
-    const { todo, deleteTodoItem, id, isChecked} = this.props;
+    const { todo, deleteTodoItem, id, isCompleted} = this.props;
     
     const toggleClick = () => {
       this.setState({
         isClicked: !this.state.isClicked
       });
-      isChecked(id-1);
+      isCompleted(id-1);
     }
 
     return (
