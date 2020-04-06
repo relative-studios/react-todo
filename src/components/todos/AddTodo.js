@@ -28,7 +28,7 @@ class AddTodo extends Component {
     }
 
     return (
-      <form className="w-100 mt-3" onSubmit={handleSubmit} onChange={handleIsValid}>
+      <form className="w-100" onSubmit={handleSubmit} onChange={handleIsValid}>
         <div className="row">
           <div className="col-10">
             <input 
@@ -40,7 +40,7 @@ class AddTodo extends Component {
           </div>
           <div className="col-2">
             <button
-              className={`btn btn-primary ${this.state.isDisabled ? 'disabled' : ''}`}
+              className={`w-100 btn btn-primary ${this.state.isDisabled ? 'disabled' : ''}`}
               type="submit"
               value="Add task"
               disabled={this.state.isDisabled}

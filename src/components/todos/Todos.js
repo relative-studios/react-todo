@@ -76,8 +76,8 @@ class Todos extends Component {
   render() {
     return (
       <div className="w-100">
-        <div className="py-3 bg-primary text-white text-center">
-          <h1 className="mb-0">TODOS</h1>
+        <div className="py-3 text-center">
+          <h1 className="mb-0 pb-0">TODOS</h1>
         </div>
         <div className="container">
           <div className="row">
