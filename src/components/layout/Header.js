@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faClipboardList, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faClipboardList, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
   return (
