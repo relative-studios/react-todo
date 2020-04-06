@@ -32,7 +32,7 @@ class Todos extends Component {
     
     // Slicing to only show first 10 results for now
     this.state.todos.forEach((todo) => {
-      todos.push(<TodoItem key={todo.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem}/>);
+      todos.push(<TodoItem key={todo.id} id={todo.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem} isChecked={this.handleIsChecked}/>);
     });
     
     return todos;
@@ -62,7 +62,20 @@ class Todos extends Component {
           ...prevState.todos
         ]
       }
-      
+    })
+  }
+
+  handleIsChecked = (indexToChange) => {
+    this.setState({
+      todos: this.state.todos.map((todo, index) => {
+        if (index === indexToChange) {
+          return {
+            ...todo,
+            ["completed"]: !todo["completed"]
+          }
+        }
+        return todo;
+      })
     })
   }
 
