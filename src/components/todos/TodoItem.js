@@ -21,8 +21,8 @@ class TodoItem extends Component {
     }
 
     return (
-      <div className="clearfix my-3 py-3 bg-white row" onClick={toggleClick}>
-        <TodoCheckbox isClicked={this.state.isClicked}/>
+      <div className="clearfix my-3 py-3 bg-white row">
+        <TodoCheckbox isClicked={this.state.isClicked} toggleClick={toggleClick}/>
         <div className="float-right col-10 pt-2">
           <h4 className={`w-100 ${this.state.isClicked ? 'strike':''}`}>
             {todo.title}
