@@ -4,34 +4,31 @@ import { Link } from "react-router-dom";
 class Landing extends Component {
   render() {
     return (
-      <div style={{ height: "75vh" }} className="container valign-wrapper">
-        <div className="row">
-          <div className="col s12 center-align">
-            <div className="col s6">
-              <Link
-                to="/register"
-                style={{
-                  width: "140px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px"
-                }}
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              >
-                Register
-              </Link>
-            </div>
-            <div className="col s6">
-              <Link
-                to="/login"
-                style={{
-                  width: "140px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px"
-                }}
-                className="btn btn-large btn-flat waves-effect white black-text"
-              >
-                Log In
-              </Link>
+      <div className="container">
+        <div className="row h-100">
+          <div className="col-6 offset-3">
+            <div className="d-flex h-100">
+              <div className="flex-container">
+                <div className="card w-100">
+                  <div className="card-header">
+                    <h2 className="text-center">Welcome!</h2>
+                  </div>
+                  <div className="card-body text-center">
+                    <Link
+                      to="/register"
+                      className="btn btn-large btn-primary m-2"
+                    >
+                      Register
+                    </Link>
+                    <Link
+                      to="/login"
+                      className="btn btn-large btn-info m-2"
+                    >
+                      Log In
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

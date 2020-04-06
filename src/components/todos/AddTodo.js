@@ -28,7 +28,7 @@ class AddTodo  extends Component {
     }
 
     return (
-      <form className="w-100 mt-3" onSubmit={handleSubmit} onChange={handleIsValid}>
+      <form className="w-100" onSubmit={handleSubmit} onChange={handleIsValid}>
         <div className="row">
           <div className="col-10">
             <input 

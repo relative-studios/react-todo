@@ -12,11 +12,17 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/todos" component={Todos} />
+        <div className="row h-100">
+          <div className="col-2 pr-0">
+            <Header className="h-100" />
+          </div>
+          <div className="col-10 pl-0 h-100 display-flex">
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/todos" component={Todos} />
+          </div>
+        </div>
         <Footer />
       </div>
     </Router>

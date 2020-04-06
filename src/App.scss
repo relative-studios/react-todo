@@ -19,21 +19,32 @@ $theme-colors: (
   margin: 0;
 }
 
+html {
+  height: 92vh;
+}
+
 body {
   background: #ededed;
   overflow-x: hidden;
+  height: 100%;
 }
 
 .App {
-  margin-bottom: 56px;
+  height: 92vh;
+}
+
+.container {
+  height: 100%;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .disabled {
   cursor: default;
-}
-
-.heading {
-  border-bottom: 15px solid #ededed;
 }
 
 .pointer {
@@ -45,4 +56,5 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
+  height: 8vh;
 }
