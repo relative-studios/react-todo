@@ -3,8 +3,6 @@ import TodoCheckbox from '../layout/TodoCheckbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-
-
 const TodoItem = (props) => {
 
   const { todo, deleteTodoItem } = props;
