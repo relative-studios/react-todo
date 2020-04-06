@@ -66,12 +66,13 @@ class Todos extends Component {
   }
 
   handleIsChecked = (indexToChange) => {
+    console.log(this.state.todos);
     this.setState({
       todos: this.state.todos.map((todo, index) => {
         if (index === indexToChange) {
           return {
             ...todo,
-            ["completed"]: !todo["completed"]
+            completed: !todo["completed"]
           }
         }
         return todo;
