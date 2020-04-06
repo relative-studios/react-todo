@@ -3,6 +3,7 @@ import TodoCheckbox from '../layout/TodoCheckbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import './TodoItem.scss';
+import PropTypes from 'prop-types';
 
 class TodoItem extends Component {
 
@@ -38,6 +39,11 @@ class TodoItem extends Component {
       </div>
     )
   }
+}
+
+TodoItem.propTypes = {
+  todo: PropTypes.object.isRequired,
+  deleteTodoItem: PropTypes.func.isRequired
 }
 
 export default TodoItem
