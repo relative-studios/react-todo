@@ -1,6 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
-class AddTodo  extends Component {
+class AddTodo extends Component {
   state = {
     isDisabled: true
   };
@@ -52,6 +53,11 @@ class AddTodo  extends Component {
       </form>
     )
   }
+}
+
+AddTodo.propTypes = {
+  addTodoItem: PropTypes.func.isRequired,
+  userInput: PropTypes.string
 }
 
 export default AddTodo

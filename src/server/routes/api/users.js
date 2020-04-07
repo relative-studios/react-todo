@@ -15,6 +15,8 @@ router.post("/register", (req, res) => {
 
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);
+  console.log('errors: ', errors);
+  console.log('isValid: ', isValid);
 
   // Check validation
   if (!isValid) {
@@ -26,11 +28,9 @@ router.post("/register", (req, res) => {
       return res.status(400).json({ email: "Email already exists" });
     } else {
       const newUser = new User({
-        username: req.body.username,
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
-        isAdmin: req.body.isAdmin
+        password: req.body.password
       });
 
       // Hash password before saving in database
@@ -52,6 +52,7 @@ router.post("/register", (req, res) => {
 // @desc Login User and Return JWT Token
 // @access Public
 router.post("/login", (req, res) => {
+  console.log('HERE');
 
   // Form validation
   const { errors, isValid } = validateLoginInput(req.body);

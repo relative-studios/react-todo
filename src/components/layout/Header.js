@@ -5,12 +5,12 @@ import { faClipboardList, faCalendarAlt } from '@fortawesome/free-solid-svg-icon
 
 function Header() {
   return (
-    <div className="heading h-100">
-      <Navbar bg="primary" variant="dark" expand="lg" className="h-100">
-        <Nav className="text-white flex-column">
-          <Navbar.Brand href="/">
+    <div className="heading h-100 w-100 text-center d-flex">
+      <Navbar bg="primary" variant="dark" expand="lg" className="h-100 right-0">
+        <Nav className="text-white flex-column text-center">
+          <Nav.Link href="/dashboard">
             <strong className="text-white">2D</strong>
-          </Navbar.Brand>
+          </Nav.Link>
           <Nav.Link href="/todos">
             <FontAwesomeIcon 
               icon={faClipboardList} 
@@ -19,7 +19,7 @@ function Header() {
               className="pointer" 
             />
           </Nav.Link>
-          <Nav.Link href="/">
+          <Nav.Link href="/dashboard">
             <FontAwesomeIcon 
               icon={faCalendarAlt} 
               size="2x" 

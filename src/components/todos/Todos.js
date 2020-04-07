@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
 import './Todos.scss';
@@ -7,7 +6,7 @@ import AddTodo from './AddTodo';
 
 class Todos extends Component {
   state = {
-    todos: this.props.todos
+    todos: []
   }
 
   componentDidMount() {
@@ -15,15 +14,15 @@ class Todos extends Component {
   }
 
   getTodoItems = () => {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-    .then(res => res.json())
-    .then(todos => {
-      const todoItems = !Array.isArray(todos) ? new Array(todos) : todos;
-      this.setState({ todos: todoItems })
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    fetch('http://localhost:5000/api/todos', {method: 'GET'})
+      .then(res => res.json())
+      .then(todos => {
+        const todoItems = !Array.isArray(todos) ? new Array(todos) : todos;
+        this.setState({ todos: todoItems })
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
 
@@ -32,7 +31,7 @@ class Todos extends Component {
     
     // Slicing to only show first 10 results for now
     this.state.todos.forEach((todo) => {
-      todos.push(<TodoItem key={todo.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem}/>);
+      todos.push(<TodoItem key={todo.todoItem.id} todo={todo.todoItem} deleteTodoItem={this.handleDeleteTodoItem}/>);
     });
     
     return todos;
@@ -41,7 +40,7 @@ class Todos extends Component {
   handleDeleteTodoItem = (id) => {
     this.setState(prevState => {
         return {
-          todos: prevState.todos.filter(p => p.userId === 1 && p.id !== id)
+          todos: prevState.todos.filter(p => p.todoItem.id !== id)
         };
     });
   }
@@ -62,9 +61,32 @@ class Todos extends Component {
           ...prevState.todos
         ]
       }
-      
     })
   }
+
+  toggleCompletedAt = index => {
+    this.togglePropertyAt("completed", index);
+  }
+
+  togglePropertyAt = (property, indexToChange) => {
+    this.setState({
+      todos: this.state.todos.map((todo, index) => {
+        if (index === indexToChange) {
+          return {
+            ...todo,
+            [property]: !todo[property]
+          }
+        }
+        return todo;
+      })
+    })
+  }
+
+
+  /*
+  HANDLE EDIT TODO ITEM
+  HANDLE EDIT TODO ITEM
+  */
 
   // render the component
   render() {
@@ -90,14 +112,9 @@ class Todos extends Component {
   }
 }
 
-// validate prop types 
-Todos.propTypes = {
-  todos: PropTypes.array.isRequired
-}
-
 // setting state for app
 const mapStateToProps = state => ({
-  todos: state.todos.todos
+  // todos: state.todos
 });
 
 export default connect(mapStateToProps, {})(Todos);
