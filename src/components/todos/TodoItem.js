@@ -13,7 +13,7 @@ class TodoItem extends Component {
 
   render(){
 
-    const { todo, deleteTodoItem, id, isCompleted} = this.props;
+    const { todo, deleteTodoItem, id } = this.props;
     
     const toggleClick = () => {
       this.setState({

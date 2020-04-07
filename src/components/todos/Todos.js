@@ -40,7 +40,7 @@ class Todos extends Component {
   handleDeleteTodoItem = (id) => {
     this.setState(prevState => {
         return {
-          todos: prevState.todos.filter(p => p.userId === 1 && p.id !== id)
+          todos: prevState.todos.filter(p => p.todoItem.id !== id)
         };
     });
   }
