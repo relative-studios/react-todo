@@ -8,22 +8,23 @@ import PropTypes from 'prop-types';
 class TodoItem extends Component {
 
   state = {
-    isClicked: false
+    isClicked: false,
   }
 
   render(){
 
-    const { todo, deleteTodoItem } = this.props;
+    const { todo, deleteTodoItem, id, isCompleted} = this.props;
     
     const toggleClick = () => {
       this.setState({
         isClicked: !this.state.isClicked
       });
+      isCompleted(id-1);
     }
 
     return (
       <div className="clearfix my-3 py-3 bg-white row">
-        <TodoCheckbox isClicked={this.state.isClicked} toggleClick={toggleClick}/>
+        <TodoCheckbox isClicked={this.state.isClicked} toggleClick={toggleClick} id={id}/>
         <div className="float-right col-10 pt-2">
           <h4 className={`w-100 ${this.state.isClicked ? 'strike':''}`}>
             {todo.title}
@@ -43,7 +44,8 @@ class TodoItem extends Component {
 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
-  deleteTodoItem: PropTypes.func.isRequired
+  deleteTodoItem: PropTypes.func.isRequired,
+  isClicked: PropTypes.bool
 }
 
 export default TodoItem

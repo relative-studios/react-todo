@@ -61,7 +61,24 @@ class Todos extends Component {
           ...prevState.todos
         ]
       }
-      
+    })
+  }
+
+  toggleCompletedAt = index => {
+    this.togglePropertyAt("completed", index);
+  }
+
+  togglePropertyAt = (property, indexToChange) => {
+    this.setState({
+      todos: this.state.todos.map((todo, index) => {
+        if (index === indexToChange) {
+          return {
+            ...todo,
+            [property]: !todo[property]
+          }
+        }
+        return todo;
+      })
     })
   }
 
