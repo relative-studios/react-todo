@@ -19,7 +19,6 @@ class TodoItem extends Component {
       this.setState({
         isClicked: !this.state.isClicked
       });
-      isCompleted(id-1);
     }
 
     return (
