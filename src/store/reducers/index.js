@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
-import todoReducer from './todoReducer';
+import { combineReducers } from "redux";
+import authReducer from "./authReducer";
+import errorReducer from "./errorReducer";
 
-const allReducers = combineReducers({
-  todos: todoReducer
+export default combineReducers({
+  auth: authReducer,
+  errors: errorReducer
 });
-
-export default allReducers;

@@ -1,5 +1,9 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../../store/actions/authActions";
+import classnames from "classnames";
 
 class Register extends Component {
   state = {
@@ -10,13 +14,28 @@ class Register extends Component {
     errors: {}
   };
 
+  componentDidMount() {
+    // If logged in and user navigates to Register page, should redirect them to dashboard
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
 
   onSubmit = e => {
     e.preventDefault();
-
+    
     const newUser = {
       name: this.state.name,
       email: this.state.email,
@@ -24,7 +43,8 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    console.log(newUser);
+    console.log('newUser: ', newUser);
+    this.props.registerUser(newUser, this.props.history); 
   };
 
   render() {
@@ -47,7 +67,9 @@ class Register extends Component {
                   <form noValidate onSubmit={this.onSubmit}>
                     <div className="form-group">
                       <input
-                        className="form-control mb-2"
+                        className={classnames("form-control", "mb-2", {
+                          invalid: errors.name
+                        })}
                         onChange={this.onChange}
                         value={this.state.name}
                         error={errors.name}
@@ -56,7 +78,9 @@ class Register extends Component {
                         placeholder="Name"
                       />
                       <input
-                        className="form-control mb-2"
+                        className={classnames("form-control", "mb-2", {
+                          invalid: errors.email
+                        })}
                         onChange={this.onChange}
                         value={this.state.email}
                         error={errors.email}
@@ -65,7 +89,9 @@ class Register extends Component {
                         placeholder="Email"
                       />
                       <input
-                        className="form-control mb-2"
+                        className={classnames("form-control", "mb-2", {
+                          invalid: errors.password
+                        })}
                         onChange={this.onChange}
                         value={this.state.password}
                         error={errors.password}
@@ -74,7 +100,9 @@ class Register extends Component {
                         placeholder="Password"
                       />
                       <input
-                        className="form-control"
+                        className={classnames("form-control", "mb-2", {
+                          invalid: errors.password2
+                        })}
                         onChange={this.onChange}
                         value={this.state.password2}
                         error={errors.password2}
@@ -82,6 +110,7 @@ class Register extends Component {
                         type="password"
                         placeholder="Confirm Password"
                       />
+                      <span className="text-danger">{ errors.password2 }</span>
                     </div>
                     <div className="form-group">
                       <button
@@ -102,4 +131,18 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(Register));
