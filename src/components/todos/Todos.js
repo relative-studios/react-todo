@@ -46,17 +46,16 @@ class Todos extends Component {
   }
 
   handleAddTodoItem = (task) => {
-    let arrayLengthIndex = this.state.todos.length;
-
     this.setState(prevState => {
       return {
         todos: [
           {
-            key: arrayLengthIndex+1,
-            userId: 1,
-            id: arrayLengthIndex+1,
-            title: task,
-            completed: false
+            userId: 'tn9nex',
+            todoItem: {
+              id: new Date().getTime(),
+              title: task,
+              completed: false
+            }
           },
           ...prevState.todos
         ]

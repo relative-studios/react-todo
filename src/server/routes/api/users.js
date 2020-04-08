@@ -15,8 +15,6 @@ router.post("/register", (req, res) => {
 
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);
-  console.log('errors: ', errors);
-  console.log('isValid: ', isValid);
 
   // Check validation
   if (!isValid) {
@@ -52,7 +50,6 @@ router.post("/register", (req, res) => {
 // @desc Login User and Return JWT Token
 // @access Public
 router.post("/login", (req, res) => {
-  console.log('HERE');
 
   // Form validation
   const { errors, isValid } = validateLoginInput(req.body);

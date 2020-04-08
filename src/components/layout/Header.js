@@ -6,29 +6,27 @@ import { faClipboardList, faCalendarAlt } from '@fortawesome/free-solid-svg-icon
 function Header() {
   return (
     <div className="heading h-100 w-100 text-center d-flex">
-      <Navbar bg="primary" variant="dark" expand="lg" className="h-100 right-0">
-        <Nav className="text-white flex-column text-center">
-          <Nav.Link href="/dashboard">
-            <strong className="text-white">2D</strong>
-          </Nav.Link>
-          <Nav.Link href="/todos">
+      <nav className="w-100 bg-primary flex-container">
+        <div className="text-white right-0">
+          <a href="/dashboard" className="custom-nav-link text-white my-2"><strong>2D</strong></a>
+          <a href="/todos" className="custom-nav-link my-2">
             <FontAwesomeIcon 
               icon={faClipboardList} 
               size="2x" 
               color="white" 
               className="pointer" 
             />
-          </Nav.Link>
-          <Nav.Link href="/dashboard">
+          </a>
+          <a href="/dashboard" className="custom-nav-link my-2">
             <FontAwesomeIcon 
               icon={faCalendarAlt} 
               size="2x" 
               color="white" 
               className="pointer" 
             />
-          </Nav.Link>
-        </Nav>
-      </Navbar>
+          </a>
+        </div>
+      </nav>
     </div>
   )
 }

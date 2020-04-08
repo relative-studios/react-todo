@@ -39,7 +39,7 @@ body {
 }
 
 .body-container {
-  width: calc(100vw - 70px);
+  width: calc(100% - 85px);
 }
 
 .container {
@@ -49,6 +49,8 @@ body {
 .flex-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 }
@@ -67,7 +69,11 @@ body {
 
 .right-0 {
   position: relative;
-  right: -5px;
+  right: -6px;
+}
+
+.custom-nav-link {
+  display: block;
 }
 
 #sticky-footer {

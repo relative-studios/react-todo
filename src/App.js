@@ -44,10 +44,10 @@ function App() {
       <Router>
         <div className="App">
           <div className="row h-100">
-            <div className="nav-container pr-0">
-              <Header className="h-100" />
+            <div className="nav-container pr-0 position-relative">
+              <Header className="header h-100" />
             </div>
-            <div className="body-container pl-0 h-100 display-flex">
+            <div className="body-container pl-0 h-100 display-flex p-3">
               <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
