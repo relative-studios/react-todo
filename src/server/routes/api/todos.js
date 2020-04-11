@@ -17,9 +17,8 @@ router.route('/').get((req, res) => {
 // @desc Add Todo Item
 // @access Public
 router.post("/add", (req, res) => {
-
   // Grab required values from request, using destructuring for clarity
-  const { email, todoTitle } = req.body;
+  const { userId, todoTitle } = req.body;
 
   // Build new todo item 
   const todo = {
@@ -31,7 +30,7 @@ router.post("/add", (req, res) => {
   // Build full todo object to push to database, using todo var above as todoItem
   const newTodo = new Todo(
     {
-      email,
+      userId,
       todoItem: todo
     }
   );

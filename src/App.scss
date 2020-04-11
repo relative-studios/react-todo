@@ -40,6 +40,7 @@ body {
 
 .body-container {
   width: calc(100% - 85px);
+  overflow-y: scroll;
 }
 
 .container {
@@ -76,10 +77,41 @@ body {
   display: block;
 }
 
+.todo-item {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
 #sticky-footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 55px;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-container {
+    width: 100%;
+    display: block;
+  }
+  
+  .body-container {
+    width: 100%;
+    overflow-y: scroll;
+  }
+
+  .custom-nav-link {
+    display: inline-block;
+  }
+
+  .mobile-layout-fix {
+    width: 100vw !important;
+  }
+
+  .todo-item {
+    font-size: 16px;
+    margin-top: 7px;
+  }
 }

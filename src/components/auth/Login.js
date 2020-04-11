@@ -6,11 +6,23 @@ import { loginUser } from "../../store/actions/authActions";
 import classnames from "classnames";
 
 class Login extends Component {
-  state = {
-    email: "",
-    password: "",
-    errors: {}
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      password: "",
+      errors: {}
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps){
+    if (nextProps.errors) {
+      return { errors: nextProps.errors } 
+    }
+
+    return null;
+  }
 
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
@@ -19,15 +31,9 @@ class Login extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
+  componentDidUpdate() {
+    if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard"); // push user to dashboard when they login
-    }
-
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
     }
   }
 
@@ -37,11 +43,15 @@ class Login extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
     const userData = {
       email: this.state.email,
       password: this.state.password
     };
-    this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+
+    // since we handle the redirect within our component 
+    // we don't need to pass in this.props.history as a parameter
+    this.props.loginUser(userData);
   };
 
   render() {

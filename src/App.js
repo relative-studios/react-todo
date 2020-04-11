@@ -45,16 +45,18 @@ function App() {
         <div className="App">
           <div className="row h-100">
             <div className="nav-container pr-0 position-relative">
-              <Header className="header h-100" />
+              <Header className="header h-100 position-fixed" />
             </div>
             <div className="body-container pl-0 h-100 display-flex p-3">
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <Switch>
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <PrivateRoute exact path="/todos" component={Todos} />
-              </Switch>
+              <div className="h-100 w-100 mobile-layout-fix">
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <Switch>
+                  <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                  <PrivateRoute exact path="/todos" component={Todos} />
+                </Switch>
+              </div>
             </div>
           </div>
           <Footer />

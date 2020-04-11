@@ -90,9 +90,9 @@ class Todos extends Component {
   // render the component
   render() {
     return (
-      <div className="w-100">
+      <div>
         <div className="py-3 text-center">
-          <h1 className="mb-0 pb-0">TODOS</h1>
+          <h1 className="mb-0 pb-0">TODOS</h1> 
         </div>
         <div className="container">
           <div className="row">

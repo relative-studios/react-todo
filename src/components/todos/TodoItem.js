@@ -25,7 +25,7 @@ class TodoItem extends Component {
       <div className="clearfix my-3 py-3 bg-white row">
         <TodoCheckbox isClicked={this.state.isClicked} toggleClick={toggleClick} id={id}/>
         <div className="float-right col-10 pt-2">
-          <h4 className={`w-100 ${this.state.isClicked ? 'strike':''}`}>
+          <p className={`w-100 todo-item .text-truncate d-block ${this.state.isClicked ? 'strike':''}`}>
             {todo.title}
             <FontAwesomeIcon 
               icon={faTrashAlt} 
@@ -34,7 +34,7 @@ class TodoItem extends Component {
               className="float-right text-danger pointer"
               onClick={() => deleteTodoItem(todo.id)}
             />
-          </h4>
+          </p>
         </div>
       </div>
     )

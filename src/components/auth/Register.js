@@ -6,13 +6,25 @@ import { registerUser } from "../../store/actions/authActions";
 import classnames from "classnames";
 
 class Register extends Component {
-  state = {
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
-    errors: {}
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      password2: "",
+      errors: {}
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps){
+    if (nextProps.errors) {
+      return { errors: nextProps.errors } 
+    }
+
+    return null;
+  }
 
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
@@ -21,11 +33,9 @@ class Register extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
+  componentDidUpdate() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
     }
   }
 
