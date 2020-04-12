@@ -5,10 +5,11 @@ let Todo = require('../../models/todo.model.js');
 // @desc Get todo items
 // @access Public
 router.route('/').get((req, res) => {
+  // Grab the userId from the query
+  const { userId } = req.query;
 
-  // We need to grab all the users data for now
-  // Eventually we will only grab the logged in users data
-  Todo.find()
+  // Search Todos collection for all todo items for username
+  Todo.find().all('userId', userId)
     .then(todos => res.json(todos))
     .catch(err => res.status(400).json('Error: ' + err))
 });
@@ -18,12 +19,12 @@ router.route('/').get((req, res) => {
 // @access Public
 router.post("/add", (req, res) => {
   // Grab required values from request, using destructuring for clarity
-  const { userId, todoTitle } = req.body;
+  const { userId, task } = req.body;
 
   // Build new todo item 
   const todo = {
     id: new Date().getTime(),
-    title: todoTitle,
+    title: task,
     completed: false
   }
 
@@ -37,7 +38,7 @@ router.post("/add", (req, res) => {
 
   // Save Todo item to DB
   newTodo.save()
-    .then(() => res.json('Todo Item Added!'))
+    .then((todo) => res.json(todo))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -49,8 +50,8 @@ router.put("/delete", (req, res) => {
   const { id } = req.query;
 
   // Remove todo item by id
-  Todo.findById(id).deleteOne()
-    .then(() => res.json('Todo Item Deleted!'))
+  Todo.findByIdAndDelete(id)
+    .then(todos => res.json(todos))
     .catch(err => res.status(400).json('Error' + err));
 });
 
