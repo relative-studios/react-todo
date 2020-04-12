@@ -6,6 +6,7 @@ import AddTodo from './AddTodo';
 
 class Todos extends Component {
   state = {
+    userId: '',
     todos: []
   }
 
@@ -14,7 +15,13 @@ class Todos extends Component {
   }
 
   getTodoItems = () => {
-    fetch('http://localhost:5000/api/todos', {method: 'GET'})
+    const url = new URL('http://localhost:5000/api/todos');
+    // Adding parameters to url
+    url.searchParams.append('userId', this.props.userId);
+
+    fetch(url, {
+      method: 'GET'
+    })
       .then(res => res.json())
       .then(todos => {
         const todoItems = !Array.isArray(todos) ? new Array(todos) : todos;
@@ -30,7 +37,7 @@ class Todos extends Component {
     let todos = [];
 
     this.state.todos.forEach((todo) => {
-      todos.push(<TodoItem key={todo._id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem}/>);
+      todos.push(<TodoItem key={todo.todoItem.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem}/>);
     });
     
     return todos;
@@ -46,7 +53,7 @@ class Todos extends Component {
     // Sending call to api
     fetch(url, {method: 'PUT'})
       .then(res => res.json())
-      .then(() => {
+      .then(response => {
         // Setting new local state of todos
         this.setState(prevState => {
           return {
@@ -59,22 +66,46 @@ class Todos extends Component {
       });
   }
 
-  handleAddTodoItem = (task) => {
-    this.setState(prevState => {
-      return {
-        todos: [
-          {
-            userId: 'tn9nex',
-            todoItem: {
-              id: new Date().getTime(),
-              title: task,
-              completed: false
-            }
-          },
-          ...prevState.todos
-        ]
-      }
+  handleAddTodoItem = (task, userId) => {
+    // Setting up base url for api call
+    const url = new URL('http://localhost:5000/api/todos/add');
+    const todoBody = {
+      task,
+      userId
+    }
+
+    // Sending call to api
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(todoBody)
     })
+      .then(res => res.json())
+      .then(todo => {
+        console.log(todo);
+        // Setting new local state of todos
+        this.setState(prevState => {
+          return {
+            todos: [
+              {
+                _id: todo._id,
+                userId,
+                todoItem: {
+                  id: new Date().getTime(),
+                  title: task,
+                  completed: false
+                }
+              },
+              ...prevState.todos
+            ]
+          }
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   toggleCompletedAt = index => {
@@ -127,7 +158,7 @@ class Todos extends Component {
 
 // setting state for app
 const mapStateToProps = state => ({
-  // todos: state.todos
+  userId: state.auth.user.username
 });
 
 export default connect(mapStateToProps, {})(Todos);

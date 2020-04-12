@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 
 class AddTodo extends Component {
-  state = {
-    isDisabled: true
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isDisabled: true
+    };
+  }
 
   render(){
-    const {addTodoItem}=this.props;
+    const { addTodoItem }=this.props;
     let userInput = React.createRef();
 
     const handleIsValid = () => {
@@ -23,7 +28,7 @@ class AddTodo extends Component {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      addTodoItem(userInput.current.value);
+      addTodoItem(userInput.current.value, this.props.userId);
       e.currentTarget.reset();
       handleIsValid();
     }
@@ -64,5 +69,9 @@ AddTodo.propTypes = {
   userInput: PropTypes.string
 }
 
-export default AddTodo
+const mapStateToProps = state => ({
+  userId: state.auth.user.username
+});
+
+export default connect(mapStateToProps)(AddTodo)
 
