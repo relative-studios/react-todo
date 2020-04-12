@@ -28,21 +28,35 @@ class Todos extends Component {
 
   renderTodoItems = () => {
     let todos = [];
-    
-    // Slicing to only show first 10 results for now
+
     this.state.todos.forEach((todo) => {
-      todos.push(<TodoItem key={todo.todoItem.id} todo={todo.todoItem} deleteTodoItem={this.handleDeleteTodoItem}/>);
+      todos.push(<TodoItem key={todo._id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem}/>);
     });
     
     return todos;
   }
 
   handleDeleteTodoItem = (id) => {
-    this.setState(prevState => {
-        return {
-          todos: prevState.todos.filter(p => p.todoItem.id !== id)
-        };
-    });
+    // Setting up base url for api call
+    const url = new URL('http://localhost:5000/api/todos/delete');
+
+    // Adding parameters to url
+    url.searchParams.append('id', id);
+
+    // Sending call to api
+    fetch(url, {method: 'PUT'})
+      .then(res => res.json())
+      .then(() => {
+        // Setting new local state of todos
+        this.setState(prevState => {
+          return {
+            todos: prevState.todos.filter(p => p._id !== id)
+          };
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   handleAddTodoItem = (task) => {

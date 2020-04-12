@@ -38,7 +38,20 @@ router.post("/add", (req, res) => {
   // Save Todo item to DB
   newTodo.save()
     .then(() => res.json('Todo Item Added!'))
-    .catch(err => res.status(400).json('Error: ' + err))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// @route PUT api/todos/delete
+// @desc Delete Todo Item
+// @access Public
+router.put("/delete", (req, res) => {
+  // Grab id from request, using destructuring for clarity
+  const { id } = req.query;
+
+  // Remove todo item by id
+  Todo.findById(id).deleteOne()
+    .then(() => res.json('Todo Item Deleted!'))
+    .catch(err => res.status(400).json('Error' + err));
 });
 
 module.exports = router;
