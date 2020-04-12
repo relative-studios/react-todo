@@ -10,7 +10,7 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      email: "",
+      username: "",
       password: "",
       errors: {}
     };
@@ -45,7 +45,7 @@ class Login extends Component {
     e.preventDefault();
 
     const userData = {
-      email: this.state.email,
+      username: this.state.username,
       password: this.state.password
     };
 
@@ -67,7 +67,7 @@ class Login extends Component {
                     <Link to="/" className="btn-flat waves-effect">Back to home</Link>
                     <div className="col-12">
                       <h4>Login below</h4>
-                      <p className="grey-text text-darken-1">
+                      <p className="text-secondary text-darken-1">
                         Don't have an account? <Link to="/register">Register</Link>
                       </p>
                     </div>
@@ -75,18 +75,17 @@ class Login extends Component {
                       <div className="form-group">
                         <input
                           className={classnames("form-control", "mb-2", {
-                            invalid: errors.email || errors.emailnotfound
+                            invalid: errors.usernameNotfound
                           })}
                           onChange={this.onChange}
-                          value={this.state.email}
-                          error={errors.email}
-                          id="email"
-                          type="email"
-                          placeholder="Email"
+                          value={this.state.username}
+                          error={errors.username}
+                          id="username"
+                          type="text"
+                          placeholder="Username"
                         />
                         <span className="red-text">
-                          {errors.email}
-                          {errors.emailnotfound}
+                          {errors.usernameNotfound}
                         </span>
                         <input
                           className={classnames("form-control", {
