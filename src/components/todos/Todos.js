@@ -66,12 +66,12 @@ class Todos extends Component {
       });
   }
 
-  handleAddTodoItem = (task, userId) => {
+  handleAddTodoItem = (task) => {
     // Setting up base url for api call
     const url = new URL('http://localhost:5000/api/todos/add');
     const todoBody = {
       task,
-      userId
+      userId: this.props.userId
     }
 
     // Sending call to api
@@ -84,14 +84,13 @@ class Todos extends Component {
     })
       .then(res => res.json())
       .then(todo => {
-        console.log(todo);
         // Setting new local state of todos
         this.setState(prevState => {
           return {
             todos: [
               {
                 _id: todo._id,
-                userId,
+                userId: this.props.userId,
                 todoItem: {
                   id: new Date().getTime(),
                   title: task,
