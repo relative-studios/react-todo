@@ -4,10 +4,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import './TodoItem.scss';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 class TodoItem extends Component {
-  state = {
-    isClicked: false,
+
+  constructor(props){
+    super(props);
+    this.state = {
+      isClicked: false,
+      todoTitle: props.todo.todoItem.title,
+    }
+  }
+
+  componentDidMount() {
+    this.updateTodoTitle();
+
+  }
+
+  updateTodoTitle = () => {
+    const url = new URL('http://localhost:5000/api/todos/edit');
+    // Adding parameters to url
+    url.searchParams.append('id', this.props.todo._id);
+    url.searchParams.append('todoTitle', this.state.todoTitle);
+
+    fetch(url, {
+      method: 'PUT'
+    })
+      .then(res => res.json())
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  onTodoChange(value) {
+    this.setState({
+      todoTitle: value
+    });
   }
 
   render(){
@@ -21,12 +56,15 @@ class TodoItem extends Component {
       });
     }
 
+    console.log(todo);
+    
+
     return (
       <div className="clearfix my-3 py-3 bg-white row">
         <TodoCheckbox isClicked={this.state.isClicked} toggleClick={toggleClick} id={todo._id}/>
         <div className="float-right col-10 pt-2">
-          <p className={`w-100 todo-item .text-truncate d-block ${this.state.isClicked ? 'strike':''}`}>
-            {todo.todoItem.title}
+          <input className={`w-100 todo-item .text-truncate d-block form-control`} value={this.state.todoTitle} onChange={e => this.onTodoChange(e.target.value)}/>
+            {/* {todo.todoItem.title} */}
             <FontAwesomeIcon 
               icon={faTrashAlt} 
               size="lg" 
@@ -34,7 +72,6 @@ class TodoItem extends Component {
               className="float-right text-danger pointer"
               onClick={() => deleteTodoItem(todo._id)}
             />
-          </p>
         </div>
       </div>
     )
