@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import TodoCheckbox from '../layout/TodoCheckbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPenFancy} from '@fortawesome/free-solid-svg-icons';
 import './TodoItem.scss';
@@ -62,13 +61,6 @@ class TodoItem extends Component {
 
     let todoContent;
     
-    // Update local state of isClicked
-    const toggleClick = () => {
-      this.setState({
-        isClicked: !this.state.isClicked
-      });
-    }
-
     const handleEnterKey = (e) => {
       if (e.key === 'Enter') {
         console.log('HERE');
