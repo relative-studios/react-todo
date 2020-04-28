@@ -1,9 +1,33 @@
-.strike{
-  text-decoration: line-through
+.strike {
+  text-decoration: line-through;
 }
-.editIcon{
-  opacity:0
+
+.editIcon {
+  opacity: 0;
 }
-.editIcon:hover{
-  opacity:100
+
+.editIcon:hover {
+  opacity: 100;
+}
+
+.has-overlay {
+  position: relative;
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    margin: auto;
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    };
+
+    .hover-icon {
+      right: 12px;
+      top: 12px;
+    };
+  }
 }

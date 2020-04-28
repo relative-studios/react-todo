@@ -67,8 +67,8 @@ router.put("/edit", (req, res) => {
   Todo.findByIdAndUpdate(
     id,
     {
-      todoItem: {
-        title: todoTitle
+      $set: {
+        'todoItem.title': todoTitle
       }
     }
   ).then(res.send('Todo item updated!'))
