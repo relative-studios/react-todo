@@ -1,7 +1,25 @@
 import React, {Component} from "react";
 
 class Profile extends Component {
+  state = {
+    user: {},
+  }
+
   //Send a fetch request to the database to grab the user object
+
+  getUserObject = () => {
+    const url = new URL('http://localhost:5000/api/profile');
+    // Adding parameters to url
+    url.searchParams.append('id', this.props.todo._id);
+
+    fetch(url)
+      .then(response => this.setState({
+        user: response
+      }))
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
   render() {
 
