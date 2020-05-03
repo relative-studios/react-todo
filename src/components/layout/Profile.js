@@ -29,13 +29,11 @@ class Profile extends Component {
           <div className="ml-auto mr-3 mb-4 profile-icon d-block bg-primary text-white">F</div> {/* The F stands for Frozenmocca. Will strip first letter off later  */}
         </div>
 
-        <div className="col-3"></div>
-        <div className ="col-6 shadow-sm p-3 mb-5 bg-primary rounded text-white">
-          
+        <div className="col-4"></div>
+        <div className ="col-4 shadow-sm p-3 mb-5 bg-primary rounded text-white">
           <div className="text-center">Frozenmocca</div> {/* Frozenmocca is just a placeholder */}
-
         </div>
-        <div className="col-3"></div>
+        <div className="col-4"></div>
 
         <div className ="col-12 text-center mb-3">
           Tasks Completed: PLACEHOLDER
