@@ -56,4 +56,15 @@ router.put("/delete", (req, res) => {
     .catch(err => res.status(400).json('Error' + err));
 });
 
+router.get("/profile", (req, res) => {
+  //Grab the userId from the query
+  const { userId } = req.query;
+
+  //CHANGES FOR THE PROFILE COMPONENT
+  //Search the users and get the user object specified by Id
+  Todo.find().all('userId', userId)
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err))
+});
+
 module.exports = router;

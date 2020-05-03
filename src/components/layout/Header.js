@@ -6,7 +6,7 @@ function Header() {
   return (
     <div className="heading h-100 w-100 text-center d-flex">
       <nav className="w-100 bg-primary flex-container">
-        <div className="text-white right-0">
+        <div className="text-white right-0 mt-auto">
           <a href="/dashboard" className="custom-nav-link text-white m-2"><strong>2D</strong></a>
           <a href="/todos" className="custom-nav-link my-2">
             <FontAwesomeIcon 
@@ -25,6 +25,9 @@ function Header() {
             />
           </a>
         </div>
+        <a href="/profile" className="text-white ml-auto mr-1 mt-auto">
+          <strong>Profile</strong>
+        </a>
       </nav>
     </div>
   )

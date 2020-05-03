@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import './Profile.scss';
 
 class Profile extends Component {
   state = {
@@ -10,7 +11,7 @@ class Profile extends Component {
   getUserObject = () => {
     const url = new URL('http://localhost:5000/api/profile');
     // Adding parameters to url
-    url.searchParams.append('id', this.props.todo._id);
+    url.searchParams.append('userId', this.props.user._id); //NEED TO FIND ACTUAL ROUTE. DISCONNECTED FROM DATABASE
 
     fetch(url)
       .then(response => this.setState({
@@ -22,25 +23,28 @@ class Profile extends Component {
   }
 
   render() {
-
     return(
       <div className="row">
-        <div className ="col">
-          <div>First Letter of the username</div>
-
-          <div>Current Number of tasks</div>
-
-          <div>Row 2</div>
-
+        <div className="col-12">
+          <div className="ml-auto mr-3 mb-4 profile-icon d-block bg-primary text-white">F</div> {/* The F stands for Frozenmocca. Will strip first letter off later  */}
         </div>
 
-        <div className ="col">
-          Column 2
-          <div>Row 1</div>
-
-          <div>Row 2</div>
+        <div className="col-3"></div>
+        <div className ="col-6 shadow-sm p-3 mb-5 bg-primary rounded text-white">
+          
+          <div className="text-center">Frozenmocca</div> {/* Frozenmocca is just a placeholder */}
 
         </div>
+        <div className="col-3"></div>
+
+        <div className ="col-12 text-center mb-3">
+          Tasks Completed: PLACEHOLDER
+        </div>
+
+        <div className ="col text-center">
+          Tasks Remaning: PLACEHOLDER
+        </div>
+        
       </div>
     )
   }
