@@ -27,6 +27,9 @@ const userSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  dueDate: {
+    type: Date
   }
 }, {
   collection: 'users',

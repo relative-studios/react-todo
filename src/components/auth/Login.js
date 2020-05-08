@@ -46,7 +46,7 @@ class Login extends Component {
 
     const userData = {
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
     };
 
     // since we handle the redirect within our component 
