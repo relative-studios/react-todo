@@ -39,7 +39,6 @@ class TodoItem extends Component {
 
   //When the edit svg is clicked, it keeps track of that click in local state to enable/disable input and fires off updateTodoTitle()
   handleToggleInput = () => {
-    console.log('handleToggleInput Triggered');
     let input = this.state.isInput;
 
     this.setState({
@@ -63,7 +62,6 @@ class TodoItem extends Component {
     
     const handleEnterKey = (e) => {
       if (e.key === 'Enter') {
-        console.log('HERE');
         e.preventDefault();
         e.stopPropagation();
   
