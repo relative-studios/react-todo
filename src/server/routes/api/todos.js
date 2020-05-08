@@ -56,4 +56,24 @@ router.put("/delete", (req, res) => {
     .catch(err => res.status(400).json('Error' + err));
 });
 
+// @route PUT api/todos/edit
+// @desc Edit todo items
+// @access Public
+router.put("/edit", (req, res) => {
+  // Grab the userId from the query
+  const { id, todoTitle } = req.query;
+
+  // Search Todos collection for all todo items for username
+
+  Todo.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        'todoItem.title': todoTitle
+      }
+    }
+  ).then(res.send('Todo item updated!'))
+  .catch(err => res.status(400).json('Error' + err));
+});
+
 module.exports = router;
