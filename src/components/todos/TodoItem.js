@@ -101,7 +101,7 @@ class TodoItem extends Component {
             {todoContent}
           </div>
         </div>
-        <div className="col-2 my-auto">
+        <div className="col-3 my-auto d-block">
 
         <DatePicker 
           onChange={this.updateDate}
@@ -109,7 +109,7 @@ class TodoItem extends Component {
         />
 
         </div>
-        <div className="col-1 ml-auto mr-5">
+        <div className="col ml-auto mr-1 d-block">
           <FontAwesomeIcon 
             icon={faTrashAlt} 
             size="lg" 
