@@ -13,13 +13,13 @@ class TodoItem extends Component {
       isClicked: false,
       todoTitle: props.todo.todoItem.title,
       isInput: false,
-      date: "",
+      duedate: props.todo.todoItem.duedate,
     }
   }
 
   //Adds current id and title of current todoItem in local state and sends a put request to the database to update information
   updateTodoTitle = () => {
-    const url = new URL('http://localhost:5000/api/todos/edit');
+    const url = new URL('http://localhost:5000/api/todos/edit-title');
     // Adding parameters to url
     url.searchParams.append('id', this.props.todo._id);
     url.searchParams.append('todoTitle', this.state.todoTitle);
@@ -33,15 +33,29 @@ class TodoItem extends Component {
       });
   }
 
-  updateDate = date => {
-    this.setState({date});
-    console.log(this.state.date);
+  updateTodoDuedate = () => {
+    const url = new URL('http://localhost:5000/api/todos/edit-duedate');
+    // Adding parameters to url
+    url.searchParams.append('id', this.props.todo._id);
+    url.searchParams.append('duedate', this.state.duedate);
+
+    fetch(url, {
+      method: 'PUT'
+    })
+      .then(response => response)
+      .catch(error => {
+        console.log(error);
+      });
   }
 
-  onTodoChange(value) {
+  onTodoTitleChange(value) {
     this.setState({
       todoTitle: value
     });
+  }
+
+  handleUpdateDuedate = duedate => {
+    this.setState({duedate});
   }
 
   //When the edit svg is clicked, it keeps track of that click in local state to enable/disable input and fires off updateTodoTitle()
@@ -58,7 +72,6 @@ class TodoItem extends Component {
       this.updateTodoTitle();
     }
   }
-
   
 
   render(){
@@ -66,6 +79,14 @@ class TodoItem extends Component {
     const { todo, deleteTodoItem } = this.props;
 
     let todoContent;
+    let duedateDate;
+
+    // Handling in case there is no duedate assigned
+    if (this.state.duedate === "") {
+      duedateDate="";
+    } else {
+      duedateDate=new Date(this.state.duedate);
+    }
     
     const handleEnterKey = (e) => {
       if (e.key === 'Enter') {
@@ -79,7 +100,7 @@ class TodoItem extends Component {
     if (this.state.isInput) {
       todoContent = <input className={`w-100 todo-item .text-truncate d-block form-control`} 
                             value={this.state.todoTitle} 
-                            onChange={e => this.onTodoChange(e.target.value)} 
+                            onChange={e => this.onTodoTitleChange(e.target.value)} 
                             onKeyDown={handleEnterKey}/>;
     } else {
       todoContent = <p className={`w-100 todo-item .text-truncate d-block form-control`}>{this.state.todoTitle}</p>
@@ -103,9 +124,10 @@ class TodoItem extends Component {
         </div>
         <div className="col-3 my-auto d-block">
 
-        <DatePicker 
-          onChange={this.updateDate}
-          value={this.state.date}
+        <DatePicker
+          value={duedateDate}
+          onChange={date => this.handleUpdateDuedate(date)}
+          onCalendarClose={this.updateTodoDuedate}
         />
 
         </div>
