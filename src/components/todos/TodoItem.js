@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPenFancy} from '@fortawesome/free-solid-svg-icons';
+import DatePicker from 'react-date-picker';
 import './TodoItem.scss';
 import PropTypes from 'prop-types';
 
@@ -11,7 +12,8 @@ class TodoItem extends Component {
     this.state = {
       isClicked: false,
       todoTitle: props.todo.todoItem.title,
-      isInput: false
+      isInput: false,
+      date: "",
     }
   }
 
@@ -29,6 +31,11 @@ class TodoItem extends Component {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  updateDate = date => {
+    this.setState({date});
+    console.log(this.state.date);
   }
 
   onTodoChange(value) {
@@ -80,7 +87,7 @@ class TodoItem extends Component {
 
     return (
       <div className="clearfix my-3 py-3 bg-white row">
-        <div className="float-right col-11">
+        <div className="float-right col-8">
           <div className="has-overlay w-100">
             <div className={`overlay h-100 ${this.state.isInput ? 'd-none':'d-block'}`}>
               <FontAwesomeIcon 
@@ -94,12 +101,20 @@ class TodoItem extends Component {
             {todoContent}
           </div>
         </div>
-        <div className="col-1">
+        <div className="col-2 my-auto">
+
+        <DatePicker 
+          onChange={this.updateDate}
+          value={this.state.date}
+        />
+
+        </div>
+        <div className="col-1 ml-auto mr-5">
           <FontAwesomeIcon 
             icon={faTrashAlt} 
             size="lg" 
             color="danger" 
-            className="float-right text-danger pointer mt-3"
+            className="float-right text-danger pointer my-2"
             onClick={() => deleteTodoItem(todo._id)}
           />
         </div>

@@ -26,7 +26,8 @@ router.post("/add", (req, res) => {
   const todo = {
     id: new Date().getTime(),
     title: task,
-    completed: false
+    completed: false,
+    dueDate: "",
   }
 
   // Build full todo object to push to database, using todo var above as todoItem
