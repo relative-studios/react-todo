@@ -139,10 +139,8 @@ class Todos extends Component {
             <AddTodo addTodoItem = {this.handleAddTodoItem}/>
           </div>
           <div className="row">
-            <div className="col-12">
-              <div className="mx-3 mx-sm-0">
-                {this.renderTodoItems()}
-              </div>
+            <div className="mx-3 mx-sm-0 w-100">
+              {this.renderTodoItems()}
             </div>
           </div>
         </div>
