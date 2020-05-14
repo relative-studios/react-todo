@@ -98,47 +98,50 @@ class TodoItem extends Component {
     }
 
     if (this.state.isInput) {
-      todoContent = <input className={`w-100 todo-item .text-truncate d-block form-control`} 
+      todoContent = <input className={`w-100 todo-item .text-truncate d-block form-control border-0`} 
                             value={this.state.todoTitle} 
                             onChange={e => this.onTodoTitleChange(e.target.value)} 
                             onKeyDown={handleEnterKey}/>;
     } else {
-      todoContent = <p className={`w-100 todo-item .text-truncate d-block form-control`}>{this.state.todoTitle}</p>
+      todoContent = <p className={`w-100 todo-item .text-truncate d-block form-control border-0`}>{this.state.todoTitle}</p>
     }
 
     return (
-      <div className="clearfix my-3 py-3 bg-white row">
-        <div className="float-right col-8">
-          <div className="has-overlay w-100">
-            <div className={`overlay h-100 ${this.state.isInput ? 'd-none':'d-block'}`}>
-              <FontAwesomeIcon 
-                icon={faPenFancy} 
-                size="lg" 
-                color="secondary" 
-                className="pointer position-absolute img-fluid hover-icon"
-                onClick={this.handleToggleInput}
-              />
+      <div className="clearfix my-2 bg-white">
+        <div className="row">
+          <div className="col-7">
+            <div className="has-overlay w-100">
+              <div className={`overlay h-100 ${this.state.isInput ? 'd-none':'d-block'}`}>
+                <FontAwesomeIcon 
+                  icon={faPenFancy} 
+                  size="lg" 
+                  color="secondary"  
+                  className="pointer position-absolute img-fluid hover-icon"
+                  onClick={this.handleToggleInput}
+                />
+              </div>
+              {todoContent}
             </div>
-            {todoContent}
           </div>
-        </div>
-        <div className="col-3 my-auto d-block">
-
-        <DatePicker
-          value={duedateDate}
-          onChange={date => this.handleUpdateDuedate(date)}
-          onCalendarClose={this.updateTodoDuedate}
-        />
-
-        </div>
-        <div className="col ml-auto mr-1 d-block">
-          <FontAwesomeIcon 
-            icon={faTrashAlt} 
-            size="lg" 
-            color="danger" 
-            className="float-right text-danger pointer my-2"
-            onClick={() => deleteTodoItem(todo._id)}
-          />
+          <div className="col-2 my-auto d-block">
+            <DatePicker
+              value={duedateDate}
+              clearIcon={null}
+              calendarIcon={null}
+              className="date-picker"
+              onChange={date => this.handleUpdateDuedate(date)}
+              onCalendarClose={this.updateTodoDuedate}
+            />
+          </div>
+          <div className="col ml-auto d-block">
+            <FontAwesomeIcon 
+              icon={faTrashAlt} 
+              size="lg" 
+              color="danger" 
+              className="float-right text-danger pointer m-2 pr-1"
+              onClick={() => deleteTodoItem(todo._id)}
+            />
+          </div>
         </div>
       </div>
     )
