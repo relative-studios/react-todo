@@ -125,7 +125,7 @@ class TodoItem extends Component {
     }
 
     return (
-      <div className="clearfix my-2 bg-white">
+      <div className="clearfix todo">
         <div className="row">
           <div className="col-7">
             <div className="has-overlay w-100">
@@ -141,18 +141,20 @@ class TodoItem extends Component {
               {todoContent}
             </div>
           </div>
-          <div className="col-2 h-100 my-auto">
+          <div className="col-2 px-0 h-100 my-auto">
             <Status status={this.state.status} options={statusOptions} />
           </div>
-          <div className="col-2 my-auto d-block">
-            <DatePicker
-              value={duedateDate}
-              clearIcon={null}
-              calendarIcon={null}
-              className="date-picker"
-              onChange={date => this.handleUpdateDuedate(date)}
-              onCalendarClose={this.updateTodoDuedate}
-            />
+          <div className="col-2 px-0 my-auto d-flex">
+            <div className="flex-center w-100">
+              <DatePicker
+                value={duedateDate}
+                clearIcon={null}
+                calendarIcon={null}
+                className="date-picker"
+                onChange={date => this.handleUpdateDuedate(date)}
+                onCalendarClose={this.updateTodoDuedate}
+              />
+            </div>
           </div>
           <div className="col ml-auto d-block">
             <FontAwesomeIcon 
