@@ -1,19 +1,19 @@
 import React, {Component} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPenFancy} from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPen} from '@fortawesome/free-solid-svg-icons';
 import DatePicker from 'react-date-picker';
+import Status from './Status';
 import './TodoItem.scss';
 import PropTypes from 'prop-types';
 
 class TodoItem extends Component {
-
   constructor(props){
     super(props);
     this.state = {
-      isClicked: false,
       todoTitle: props.todo.todoItem.title,
       isInput: false,
       duedate: props.todo.todoItem.duedate,
+      status: props.todo.todoItem.status || '-',
     }
   }
 
@@ -77,6 +77,24 @@ class TodoItem extends Component {
   render(){
     // User destructuring to grab todo item and deleteTodo method
     const { todo, deleteTodoItem } = this.props;
+    const statusOptions = [
+      {
+        title: '-',
+        background: 'light'
+      },
+      {
+        title: 'in progress',
+        background: 'primary'
+      },
+      {
+        title: 'testing',
+        background: 'warning'
+      },
+      {
+        title: 'complete',
+        background: 'success'
+      }
+    ];
 
     let todoContent;
     let duedateDate;
@@ -113,8 +131,8 @@ class TodoItem extends Component {
             <div className="has-overlay w-100">
               <div className={`overlay h-100 ${this.state.isInput ? 'd-none':'d-block'}`}>
                 <FontAwesomeIcon 
-                  icon={faPenFancy} 
-                  size="lg" 
+                  icon={faPen} 
+                  size="sm" 
                   color="secondary"  
                   className="pointer position-absolute img-fluid hover-icon"
                   onClick={this.handleToggleInput}
@@ -122,6 +140,9 @@ class TodoItem extends Component {
               </div>
               {todoContent}
             </div>
+          </div>
+          <div className="col-2 h-100 my-auto">
+            <Status status={this.state.status} options={statusOptions} />
           </div>
           <div className="col-2 my-auto d-block">
             <DatePicker
@@ -150,8 +171,7 @@ class TodoItem extends Component {
 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
-  deleteTodoItem: PropTypes.func.isRequired,
-  isClicked: PropTypes.bool
+  deleteTodoItem: PropTypes.func.isRequired
 }
 
 export default TodoItem
