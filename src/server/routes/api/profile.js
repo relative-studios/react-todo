@@ -13,7 +13,6 @@ router.route("/").get((req, res) => {
         username: user.username,
         name: user.name,
         email: user.email,
-        duedate: user.duedate
       };
       
       res.send(formattedUser);
