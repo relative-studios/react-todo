@@ -42,17 +42,17 @@ class Profile extends Component {
     return(
       <div className="row">
         <div className="col-12">
-          <div className="ml-auto mr-3 mb-5 profile-icon d-block bg-primary text-white">{this.props.user.username.slice(0,1)}</div> {/* The F stands for Frozenmocca. Will strip first letter off later  */}
+          <div className="ml-auto mr-3 mb-5 profile-icon d-block bg-primary text-white userLetter">{this.props.user.username.slice(0,1)}</div> {/* The F stands for Frozenmocca. Will strip first letter off later  */}
         </div>
 
         <div className="col-4"></div>
-          <div className ="col-4 shadow-sm p-3 mb-5 bg-primary rounded text-white">
+          <div className ="col-4 shadow-sm p-3 mb-5 bg-primary rounded text-white username">
             <div className="text-center">{this.state.user.username}</div>
           </div>
         <div className="col-4"></div>
 
         <div className="col-5"></div>
-        <div className ="col-2 text-center shadow-sm p-3 mb-5 bg-primary rounded text-white">
+        <div className ="col-2 text-center shadow-sm p-3 mb-5 bg-primary rounded text-white userInfo">
           <div>Name: {this.state.user.name}</div>
           <div>Email: {this.state.user.email}</div>
         </div>

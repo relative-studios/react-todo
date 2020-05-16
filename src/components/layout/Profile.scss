@@ -1,3 +1,23 @@
+@keyframes FadeInUsername {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes FadeInInfo{
+  0% {opacity: 0;}
+  50% {opacity: 0}
+  100% {opacity: 1;}
+}
+
+@keyframes SlideUserLetter {
+  100% { right: 0; }
+}
+
+@keyframes BringInUserCircle {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
 .profile-icon {
   height: 50px;
   width: 50px;
@@ -8,7 +28,52 @@
   float: right;
 }
 
-.row-text-center::before{
+.row-text-center::before {
   content:"";
   margin-left:calc(100% - 75%);
 } 
+
+.username {
+  animation: FadeInUsername 2s;
+}
+
+.userinfo {
+  opacity: 0;
+
+}
+
+.userInfo {
+  animation: FadeInInfo 2s;
+}
+
+.userLetter {
+  position: relative;
+  right: -100px;
+  animation: SlideUserLetter 2s forwards;
+  animation-delay: 1s;
+}
+
+
+
+
+/*
+#slide {
+    position: absolute;
+    left: -100px;
+    width: 100px;
+    height: 100px;
+    background: blue;
+    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation-delay: 2s;
+    animation: slide 0.5s forwards;
+    animation-delay: 2s;
+}
+
+@-webkit-keyframes slide {
+    100% { left: 0; }
+}
+
+@keyframes slide {
+    100% { left: 0; }
+}
+*/
