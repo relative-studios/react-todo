@@ -54,7 +54,7 @@ class Profile extends Component {
         <div className="col-5"></div>
         <div className ="col-2 text-center shadow-sm p-3 mb-5 bg-primary rounded text-white userInfo">
           <div>Name: {this.state.user.name}</div>
-          <div>Email: {this.state.user.email}</div>
+          <div className="border-top my-2 pt-1">Email: {this.state.user.email}</div>
         </div>
         <div className="col-5"></div>
         
