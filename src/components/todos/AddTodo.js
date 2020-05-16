@@ -49,7 +49,7 @@ class AddTodo extends Component {
           <div className="col-12 col-md-2 mb-2">
             <div className="mx-3 mx-sm-0">
               <button
-                className={`w-100 btn btn-primary ${this.state.isDisabled ? 'disabled' : ''}`}
+                className={`w-100 btn btn-info ${this.state.isDisabled ? 'disabled' : ''}`}
                 type="submit"
                 value="Add task"
                 disabled={this.state.isDisabled}

@@ -141,6 +141,24 @@ class Todos extends Component {
           </div>
           <div className="row">
             <div className="mx-3 mx-sm-0 w-100">
+              <div className="row">
+                <div className="col-7">
+                  <p className="todo-header">Todo</p>
+                </div>
+                <div className="col-2 px-0 h-100 my-auto">
+                  <p className="todo-header rounded-header left">Status</p>
+                </div>
+                <div className="col-2 px-0 my-auto d-block">
+                  <p className="todo-header rounded-header right">Due Date</p>
+                </div>
+                <div className="col ml-auto d-block">
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="mx-3 mx-sm-0 w-100">
               {this.renderTodoItems()}
             </div>
           </div>
