@@ -3,23 +3,32 @@ import React, { Component } from 'react'
 class Status extends Component {
   constructor(props){
     super(props);
-    this.updateStatus = props.updateStatus.bind(this);
 
     this.state = {
       status: props.status,
       options: props.options,
       optionsActive: false,
-      optionsBackground: 'light'
+      optionsBackground: 'light',
+      id: props.id
     }
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.status !== this.state.status) {
-  //     this.updateStatus(this.state.status);
-  //   }
-  //   console.log("Status did update");
-  // }
-  
+  //Adds current id passed from TodoItem parent and status of current todoItem in passed into function and sends a put request to the database to update information
+  updateTodoStatus = status => {
+    const url = new URL('http://localhost:5000/api/todos/edit-status');
+    // Adding parameters to url
+    url.searchParams.append('id', this.state.id);
+    url.searchParams.append('status', status);
+
+    fetch(url, {
+      method: 'PUT'
+    })
+      .then(response => response)
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   toggleOptions = () => {
     this.setState({optionsActive: true});
   }
@@ -28,6 +37,8 @@ class Status extends Component {
     this.setState({status: option.title});
     this.setState({optionsBackground: option.background});
     this.setState({optionsActive: false});
+
+    this.updateTodoStatus(option.title);
   }
 
   renderOptions = () => {
@@ -41,18 +52,10 @@ class Status extends Component {
   }
 
   render() {
-    const {updateStatus} = this.props;
-    
-    // if (this.state.optionsActive === false && this.state.status !== "-") {
-    //   updateStatus(this.state.status);
-    // }
-
-    //onClick={() => updateStatus(this.state.status)} 
-
     return (
       <div className="position-relative h-100 status">
         <div onClick={this.toggleOptions} className={`w-100 h-100 text-center status-overlay bg-${this.state.optionsBackground} ${this.state.optionsActive ? "hidden" : ""}`}>{ this.state.status }</div>
-        <div onClick={() => updateStatus(this.state.status)} className={`status-options ${this.state.optionsActive ? "" : "hidden"}`} onChange={() => this.props.updateStatus(this.state.status)}>
+        <div className={`status-options ${this.state.optionsActive ? "" : "hidden"}`}>
           {this.renderOptions()}
         </div>
       </div>

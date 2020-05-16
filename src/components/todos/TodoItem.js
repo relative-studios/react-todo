@@ -33,26 +33,12 @@ class TodoItem extends Component {
       });
   }
 
+  //Adds current id and duedate of current todoItem in local state and sends a put request to the database to update information
   updateTodoDuedate = () => {
     const url = new URL('http://localhost:5000/api/todos/edit-duedate');
     // Adding parameters to url
     url.searchParams.append('id', this.props.todo._id);
     url.searchParams.append('duedate', this.state.duedate);
-
-    fetch(url, {
-      method: 'PUT'
-    })
-      .then(response => response)
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  updateTodoStatus = status => {
-    const url = new URL('http://localhost:5000/api/todos/edit-status');
-    // Adding parameters to url
-    url.searchParams.append('id', this.props.todo._id);
-    url.searchParams.append('status', status);
 
     fetch(url, {
       method: 'PUT'
@@ -114,21 +100,7 @@ class TodoItem extends Component {
 
     let todoContent;
     let duedateDate;
-    let todoStatus = "";
-
-    const handleUpdateStatus = status => {
-      todoStatus = status;
-      console.log("status: " + todoStatus);
-      //this.setState({status});
-      this.updateTodoStatus(status);
-
-    }
-
-    // if (todoStatus === "") {
-    //   this.setState({status: todoStatus});
-    //   console.log(this.state.status);
-    // }
-
+    
     // Handling in case there is no duedate assigned
     if (this.state.duedate === "") {
       duedateDate="";
@@ -176,7 +148,7 @@ class TodoItem extends Component {
             <Status 
               status={this.state.status} 
               options={statusOptions} 
-              updateStatus={handleUpdateStatus}
+              id={this.props.todo._id}
             />
           </div>
           <div className="col-2 my-auto d-block">
