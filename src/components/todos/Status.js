@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 class Status extends Component {
   constructor(props){
     super(props);
+    this.updateStatus = props.updateStatus.bind(this);
 
     this.state = {
       status: props.status,
@@ -12,6 +13,13 @@ class Status extends Component {
     }
   }
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.status !== this.state.status) {
+  //     this.updateStatus(this.state.status);
+  //   }
+  //   console.log("Status did update");
+  // }
+  
   toggleOptions = () => {
     this.setState({optionsActive: true});
   }
@@ -33,15 +41,24 @@ class Status extends Component {
   }
 
   render() {
+    const {updateStatus} = this.props;
+    
+    // if (this.state.optionsActive === false && this.state.status !== "-") {
+    //   updateStatus(this.state.status);
+    // }
+
+    //onClick={() => updateStatus(this.state.status)} 
+
     return (
       <div className="position-relative h-100 status">
         <div onClick={this.toggleOptions} className={`w-100 h-100 text-center status-overlay bg-${this.state.optionsBackground} ${this.state.optionsActive ? "hidden" : ""}`}>{ this.state.status }</div>
-        <div className={`status-options ${this.state.optionsActive ? "" : "hidden"}`}>
+        <div onClick={() => updateStatus(this.state.status)} className={`status-options ${this.state.optionsActive ? "" : "hidden"}`} onChange={() => this.props.updateStatus(this.state.status)}>
           {this.renderOptions()}
         </div>
       </div>
     )
   }
+  
 }
 
 export default Status;

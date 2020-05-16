@@ -95,7 +95,8 @@ class Todos extends Component {
                   id: new Date().getTime(),
                   title: task,
                   completed: false,
-                  duedate:""
+                  duedate: "",
+                  status: "-"
                 }
               },
               ...prevState.todos

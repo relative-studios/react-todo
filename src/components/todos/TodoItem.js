@@ -48,6 +48,21 @@ class TodoItem extends Component {
       });
   }
 
+  updateTodoStatus = status => {
+    const url = new URL('http://localhost:5000/api/todos/edit-status');
+    // Adding parameters to url
+    url.searchParams.append('id', this.props.todo._id);
+    url.searchParams.append('status', status);
+
+    fetch(url, {
+      method: 'PUT'
+    })
+      .then(response => response)
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   onTodoTitleChange(value) {
     this.setState({
       todoTitle: value
@@ -57,6 +72,7 @@ class TodoItem extends Component {
   handleUpdateDuedate = duedate => {
     this.setState({duedate});
   }
+
 
   //When the edit svg is clicked, it keeps track of that click in local state to enable/disable input and fires off updateTodoTitle()
   handleToggleInput = () => {
@@ -98,6 +114,20 @@ class TodoItem extends Component {
 
     let todoContent;
     let duedateDate;
+    let todoStatus = "";
+
+    const handleUpdateStatus = status => {
+      todoStatus = status;
+      console.log("status: " + todoStatus);
+      //this.setState({status});
+      this.updateTodoStatus(status);
+
+    }
+
+    // if (todoStatus === "") {
+    //   this.setState({status: todoStatus});
+    //   console.log(this.state.status);
+    // }
 
     // Handling in case there is no duedate assigned
     if (this.state.duedate === "") {
@@ -112,6 +142,7 @@ class TodoItem extends Component {
         e.stopPropagation();
   
         this.handleToggleInput();
+        console.log(this.state.status);
       }
     }
 
@@ -142,7 +173,11 @@ class TodoItem extends Component {
             </div>
           </div>
           <div className="col-2 h-100 my-auto">
-            <Status status={this.state.status} options={statusOptions} />
+            <Status 
+              status={this.state.status} 
+              options={statusOptions} 
+              updateStatus={handleUpdateStatus}
+            />
           </div>
           <div className="col-2 my-auto d-block">
             <DatePicker
