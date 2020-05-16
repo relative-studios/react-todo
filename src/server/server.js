@@ -10,6 +10,7 @@ const passport = require("passport");
 const dashboardRouter = require('./routes/api/dashboard');
 const userRouter = require('./routes/api/users');
 const todosRouter = require('./routes/api/todos');
+const profileRouter = require('./routes/api/profile');
 
 require('dotenv').config();
 
@@ -38,6 +39,7 @@ app.use(bodyParser.json());
 app.use('/api/', dashboardRouter);
 app.use('/api/users', userRouter);
 app.use('/api/todos', todosRouter);
+app.use('/api/profile', profileRouter);
 
 
 // MONGOOSE

@@ -1,0 +1,14 @@
+.profile-icon {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  display: block;
+  text-align: center;
+  padding-top: .75em;
+  float: right;
+}
+
+.row-text-center::before{
+  content:"";
+  margin-left:calc(100% - 75%);
+} 

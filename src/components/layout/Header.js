@@ -25,6 +25,9 @@ function Header() {
             />
           </a>
         </div>
+        <a href="/profile" className="text-white ml-auto mr-1 mt-auto">
+          <strong>Profile</strong>
+        </a>
       </nav>
     </div>
   )

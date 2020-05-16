@@ -15,6 +15,7 @@ import Footer from './components/layout/Footer';
 import Todos from './components/todos/Todos';
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/layout/Dashboard";
+import Profile from "./components/layout/Profile";
 
 function App() {
   // Check for token to keep user logged in
@@ -55,6 +56,7 @@ function App() {
                 <Switch>
                   <PrivateRoute exact path="/dashboard" component={Dashboard} />
                   <PrivateRoute exact path="/todos" component={Todos} />
+                  <PrivateRoute exact path="/profile" component={Profile} />
                 </Switch>
               </div>
             </div>
