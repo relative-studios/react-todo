@@ -27,7 +27,7 @@ router.post("/add", (req, res) => {
     title: task,
     completed: false,
     duedate: "",
-    status: "-"
+    status: ""
   }
 
   // Build full todo object to push to database, using todo var above as todoItem
@@ -102,7 +102,7 @@ router.put("/edit-duedate", (req, res) => {
 // @access Public
 router.put("/edit-status", (req, res) => {
   // Grab the userId  and status from the query
-  const { id, status } = req.query;
+  const { id, title, background } = req.query;
 
   // Search Todos collection for all todo items for username
 
@@ -110,7 +110,10 @@ router.put("/edit-status", (req, res) => {
     id,
     {
       $set: {
-        'todoItem.status': status
+        'todoItem.status': [
+          title,
+          background
+        ]
       }
     }
   ).then(res.send('Todo status updated!'))

@@ -96,7 +96,7 @@ class Todos extends Component {
                   title: task,
                   completed: false,
                   duedate: "",
-                  status: "-"
+                  status: ""
                 }
               },
               ...prevState.todos
