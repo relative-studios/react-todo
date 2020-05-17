@@ -20,7 +20,6 @@ router.route('/').get((req, res) => {
 router.post("/add", (req, res) => {
   // Grab required values from request, using destructuring for clarity
   const { userId, task } = req.body;
-  console.log(userId);
 
   // Build new todo item 
   const todo = {
