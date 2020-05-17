@@ -110,10 +110,10 @@ router.put("/edit-status", (req, res) => {
     id,
     {
       $set: {
-        'todoItem.status': [
+        'todoItem.status': {
           title,
           background
-        ]
+        }
       }
     }
   ).then(res.send('Todo status updated!'))

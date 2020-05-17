@@ -5,10 +5,10 @@ class Status extends Component {
     super(props);
 
     this.state = {
-      status: props.status[0],
+      status: props.status.title || '-',
       options: props.options,
       optionsActive: false,
-      optionsBackground: props.status[1],
+      optionsBackground: props.status.background,
       id: props.id
     }
   }
