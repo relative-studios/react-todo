@@ -43,6 +43,68 @@ class Todos extends Component {
     return todos;
   }
 
+  renderTodoBuckets = () => {
+    const statuses = ['-', 'in progress', 'complete'];
+    const buckets = [];
+    const todos = [];
+
+    statuses.forEach((status) => {
+      buckets.push(this.state.todos.filter((todo) => todo.todoItem.status.title === status))
+    });
+    
+    buckets.forEach((bucket) => {
+      if (bucket.length) {
+        let tempArr = [];
+        // build temp array holding current buckets todos
+        bucket.forEach((todo) => {
+          tempArr.push(<TodoItem key={todo.todoItem.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem} updateStatus={this.updateInitialTodoStatus}/>);
+        })
+
+        // Build markup for bucket
+        todos.push(
+          <div className="row" key={bucket[0].todoItem.id}>
+            <div className="mx-3 mx-sm-0 w-100">
+              <div className="row">
+                <div className="mx-3 mx-sm-0 w-100">
+                  <div className="row">
+                    <div className="col-7">
+                      <p className="todo-header capitalize">
+                        {bucket[0].todoItem.status.title === '-' ? 'Todo' : bucket[0].todoItem.status.title}
+                      </p>
+                    </div>
+                    <div className="col-2 px-0 h-100 my-auto">
+                      <p className="todo-header rounded-header left">Status</p>
+                    </div>
+                    <div className="col-2 px-0 my-auto d-block">
+                      <p className="todo-header rounded-header right">Due Date</p>
+                    </div>
+                    <div className="col ml-auto d-block"></div>
+                  </div>
+                </div>
+              </div>
+              {
+                // place the temp array with current buckets todos
+                tempArr
+              }
+            </div>
+          </div>
+        )
+        tempArr = [];
+      }
+    });
+
+    return todos;
+  }
+
+  // We need to keep the original todos in sync so that they get rendered properly when status updates
+  updateInitialTodoStatus = (id, title, background) => {
+    this.setState(state => {
+      state.todos.filter(p => p._id === id)[0].todoItem.status.title = title
+      state.todos.filter(p => p._id === id)[0].todoItem.status.background = background
+      return state
+    })
+  }
+
   handleDeleteTodoItem = (id) => {
     // Setting up base url for api call
     const url = new URL('http://localhost:5000/api/todos/delete');
@@ -96,7 +158,10 @@ class Todos extends Component {
                   title: task,
                   completed: false,
                   duedate: "",
-                  status: ""
+                  status: {
+                    title: "-",
+                    background: "light"
+                  }
                 }
               },
               ...prevState.todos
@@ -139,29 +204,9 @@ class Todos extends Component {
           <div className="row">
             <AddTodo addTodoItem = {this.handleAddTodoItem}/>
           </div>
-          <div className="row">
-            <div className="mx-3 mx-sm-0 w-100">
-              <div className="row">
-                <div className="col-7">
-                  <p className="todo-header">Todo</p>
-                </div>
-                <div className="col-2 px-0 h-100 my-auto">
-                  <p className="todo-header rounded-header left">Status</p>
-                </div>
-                <div className="col-2 px-0 my-auto d-block">
-                  <p className="todo-header rounded-header right">Due Date</p>
-                </div>
-                <div className="col ml-auto d-block">
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="mx-3 mx-sm-0 w-100">
-              {this.renderTodoItems()}
-            </div>
-          </div>
+          {
+            this.renderTodoBuckets()
+          }
         </div>
       </div>
     )

@@ -27,7 +27,10 @@ router.post("/add", (req, res) => {
     title: task,
     completed: false,
     duedate: "",
-    status: ""
+    status: {
+      title: "-",
+      background: "light"
+    }
   }
 
   // Build full todo object to push to database, using todo var above as todoItem

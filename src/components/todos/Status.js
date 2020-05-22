@@ -39,9 +39,8 @@ class Status extends Component {
     this.setState({optionsBackground: option.background});
     this.setState({optionsActive: false});
 
-    console.log(this.state.status);
-
     this.updateTodoStatus(option.title, option.background);
+    this.props.updateStatus(this.state.id, option.title, option.background)
   }
 
   renderOptions = () => {

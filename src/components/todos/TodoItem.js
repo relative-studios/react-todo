@@ -78,7 +78,7 @@ class TodoItem extends Component {
 
   render(){
     // User destructuring to grab todo item and deleteTodo method
-    const { todo, deleteTodoItem } = this.props;
+    const { todo, deleteTodoItem, updateStatus } = this.props;
     const statusOptions = [
       {
         title: '-',
@@ -87,10 +87,6 @@ class TodoItem extends Component {
       {
         title: 'in progress',
         background: 'primary'
-      },
-      {
-        title: 'testing',
-        background: 'warning'
       },
       {
         title: 'complete',
@@ -114,15 +110,16 @@ class TodoItem extends Component {
         e.stopPropagation();
   
         this.handleToggleInput();
-        console.log(this.state.status);
       }
     }
 
     if (this.state.isInput) {
-      todoContent = <input className={`w-100 todo-item .text-truncate d-block form-control border-0`} 
-                            value={this.state.todoTitle} 
-                            onChange={e => this.onTodoTitleChange(e.target.value)} 
-                            onKeyDown={handleEnterKey}/>;
+      todoContent = <input 
+                      className={`w-100 todo-item .text-truncate d-block form-control border-0`} 
+                      value={this.state.todoTitle} 
+                      onChange={e => this.onTodoTitleChange(e.target.value)} 
+                      onKeyDown={handleEnterKey}
+                    />;
     } else {
       todoContent = <p className={`w-100 todo-item .text-truncate d-block form-control border-0`}>{this.state.todoTitle}</p>
     }
@@ -146,7 +143,7 @@ class TodoItem extends Component {
           </div>
           <div className="col-2 h-100 my-auto">
             <Status 
-              status={this.state.status} options={statusOptions} id={this.props.todo._id}
+              status={this.state.status} options={statusOptions} id={this.props.todo._id} updateStatus={updateStatus}
             />
           </div>
           <div className="col-2 px-0 my-auto d-flex">
