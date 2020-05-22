@@ -27,6 +27,10 @@ router.post("/add", (req, res) => {
     title: task,
     completed: false,
     duedate: "",
+    status: {
+      title: "-",
+      background: "light"
+    }
   }
 
   // Build full todo object to push to database, using todo var above as todoItem
@@ -80,7 +84,7 @@ router.put("/edit-title", (req, res) => {
 // @desc Edit todo item's duedate
 // @access Public
 router.put("/edit-duedate", (req, res) => {
-  // Grab the userId from the query
+  // Grab the userId and duedate from the query
   const { id, duedate } = req.query;
 
   // Search Todos collection for all todo items for username
@@ -93,6 +97,29 @@ router.put("/edit-duedate", (req, res) => {
       }
     }
   ).then(res.send('Todo date updated!'))
+  .catch(err => res.status(400).json('Error' + err));
+});
+
+// @route PUT api/todos/edit-status
+// @desc Edit todo item's status
+// @access Public
+router.put("/edit-status", (req, res) => {
+  // Grab the userId  and status from the query
+  const { id, title, background } = req.query;
+
+  // Search Todos collection for all todo items for username
+
+  Todo.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        'todoItem.status': {
+          title,
+          background
+        }
+      }
+    }
+  ).then(res.send('Todo status updated!'))
   .catch(err => res.status(400).json('Error' + err));
 });
 

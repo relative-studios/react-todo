@@ -5,11 +5,29 @@ class Status extends Component {
     super(props);
 
     this.state = {
-      status: props.status,
+      status: props.status.title || '-',
       options: props.options,
       optionsActive: false,
-      optionsBackground: 'light'
+      optionsBackground: props.status.background,
+      id: props.id
     }
+  }
+
+  //Adds current id passed from TodoItem parent and status of current todoItem in passed into function and sends a put request to the database to update information
+  updateTodoStatus = (title, background) => {
+    const url = new URL('http://localhost:5000/api/todos/edit-status');
+    // Adding parameters to url
+    url.searchParams.append('id', this.state.id);
+    url.searchParams.append('title', title);
+    url.searchParams.append('background', background);
+
+    fetch(url, {
+      method: 'PUT'
+    })
+      .then(response => response)
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   toggleOptions = () => {
@@ -20,6 +38,9 @@ class Status extends Component {
     this.setState({status: option.title});
     this.setState({optionsBackground: option.background});
     this.setState({optionsActive: false});
+
+    this.updateTodoStatus(option.title, option.background);
+    this.props.updateStatus(this.state.id, option.title, option.background)
   }
 
   renderOptions = () => {
@@ -42,6 +63,7 @@ class Status extends Component {
       </div>
     )
   }
+  
 }
 
 export default Status;

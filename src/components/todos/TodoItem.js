@@ -33,6 +33,7 @@ class TodoItem extends Component {
       });
   }
 
+  //Adds current id and duedate of current todoItem in local state and sends a put request to the database to update information
   updateTodoDuedate = () => {
     const url = new URL('http://localhost:5000/api/todos/edit-duedate');
     // Adding parameters to url
@@ -58,6 +59,7 @@ class TodoItem extends Component {
     this.setState({duedate});
   }
 
+
   //When the edit svg is clicked, it keeps track of that click in local state to enable/disable input and fires off updateTodoTitle()
   handleToggleInput = () => {
     let input = this.state.isInput;
@@ -76,7 +78,7 @@ class TodoItem extends Component {
 
   render(){
     // User destructuring to grab todo item and deleteTodo method
-    const { todo, deleteTodoItem } = this.props;
+    const { todo, deleteTodoItem, updateStatus } = this.props;
     const statusOptions = [
       {
         title: '-',
@@ -87,10 +89,6 @@ class TodoItem extends Component {
         background: 'primary'
       },
       {
-        title: 'testing',
-        background: 'warning'
-      },
-      {
         title: 'complete',
         background: 'success'
       }
@@ -98,7 +96,7 @@ class TodoItem extends Component {
 
     let todoContent;
     let duedateDate;
-
+    
     // Handling in case there is no duedate assigned
     if (this.state.duedate === "") {
       duedateDate="";
@@ -116,10 +114,12 @@ class TodoItem extends Component {
     }
 
     if (this.state.isInput) {
-      todoContent = <input className={`w-100 todo-item .text-truncate d-block form-control border-0`} 
-                            value={this.state.todoTitle} 
-                            onChange={e => this.onTodoTitleChange(e.target.value)} 
-                            onKeyDown={handleEnterKey}/>;
+      todoContent = <input 
+                      className={`w-100 todo-item .text-truncate d-block form-control border-0`} 
+                      value={this.state.todoTitle} 
+                      onChange={e => this.onTodoTitleChange(e.target.value)} 
+                      onKeyDown={handleEnterKey}
+                    />;
     } else {
       todoContent = <p className={`w-100 todo-item .text-truncate d-block form-control border-0`}>{this.state.todoTitle}</p>
     }
@@ -141,8 +141,10 @@ class TodoItem extends Component {
               {todoContent}
             </div>
           </div>
-          <div className="col-2 px-0 h-100 my-auto">
-            <Status status={this.state.status} options={statusOptions} />
+          <div className="col-2 h-100 my-auto">
+            <Status 
+              status={this.state.status} options={statusOptions} id={this.props.todo._id} updateStatus={updateStatus}
+            />
           </div>
           <div className="col-2 px-0 my-auto d-flex">
             <div className="flex-center w-100">
