@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
 import './Todos.scss';
 import AddTodo from './AddTodo';
+import store from "../../store/store";
+import { getTodos } from '../../store/actions/todoActions';
 
 class Todos extends Component {
   state = {
@@ -11,36 +13,7 @@ class Todos extends Component {
   }
 
   componentDidMount() {
-    this.getTodoItems();
-  }
-
-  getTodoItems = () => {
-    const url = new URL('http://localhost:5000/api/todos');
-    // Adding parameters to url
-    url.searchParams.append('userId', this.props.userId);
-
-    fetch(url, {
-      method: 'GET'
-    })
-      .then(res => res.json())
-      .then(todos => {
-        const todoItems = !Array.isArray(todos) ? new Array(todos) : todos;
-        this.setState({ todos: todoItems })
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-
-  renderTodoItems = () => {
-    let todos = [];
-
-    this.state.todos.forEach((todo) => {
-      todos.push(<TodoItem key={todo.todoItem.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem}/>);
-    });
-    
-    return todos;
+    store.dispatch(getTodos(this.props.userId));
   }
 
   renderTodoBuckets = () => {
@@ -49,7 +22,7 @@ class Todos extends Component {
     const todos = [];
 
     statuses.forEach((status) => {
-      buckets.push(this.state.todos.filter((todo) => todo.todoItem.status.title === status))
+      buckets.push(this.props.todos.filter((todo) => todo.todoItem.status.title === status))
     });
     
     buckets.forEach((bucket) => {
@@ -57,7 +30,7 @@ class Todos extends Component {
         let tempArr = [];
         // build temp array holding current buckets todos
         bucket.forEach((todo) => {
-          tempArr.push(<TodoItem key={todo.todoItem.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem} updateStatus={this.updateInitialTodoStatus}/>);
+          tempArr.push(<TodoItem key={todo.todoItem.id} todo={todo} updateTodoDate={this.updateInitialTodoDate} deleteTodoItem={this.handleDeleteTodoItem}/>);
         })
 
         // Build markup for bucket
@@ -96,14 +69,14 @@ class Todos extends Component {
     return todos;
   }
 
-  // We need to keep the original todos in sync so that they get rendered properly when status updates
-  updateInitialTodoStatus = (id, title, background) => {
+  // TODO move this as a dispatch in the datePicker component
+  /* 
+  updateInitialTodoDate = (id, date) => {
     this.setState(state => {
-      state.todos.filter(p => p._id === id)[0].todoItem.status.title = title
-      state.todos.filter(p => p._id === id)[0].todoItem.status.background = background
-      return state
+      state.todos.filter(p => p._id === id)[0].todoItem.duedate = date
     })
-  }
+  } 
+  */
 
   handleDeleteTodoItem = (id) => {
     // Setting up base url for api call
@@ -116,12 +89,16 @@ class Todos extends Component {
     fetch(url, {method: 'PUT'})
       .then(res => res.json())
       .then(response => {
+        // TODO since we are not longer using local state, we need to update the global state
+
         // Setting new local state of todos
+        /* 
         this.setState(prevState => {
           return {
             todos: prevState.todos.filter(p => p._id !== id)
           };
-        });
+        }); 
+        */
       })
       .catch(error => {
         console.log(error);
@@ -146,7 +123,10 @@ class Todos extends Component {
     })
       .then(res => res.json())
       .then(todo => {
+        // TODO since we are not longer using local state, we need to update the global state
+
         // Setting new local state of todos
+        /* 
         this.setState(prevState => {
           return {
             todos: [
@@ -167,31 +147,13 @@ class Todos extends Component {
               ...prevState.todos
             ]
           }
-        });
+        }); 
+        */
       })
       .catch(error => {
         console.log(error);
       });
   }
-
-  toggleCompletedAt = index => {
-    this.togglePropertyAt("completed", index);
-  }
-
-  togglePropertyAt = (property, indexToChange) => {
-    this.setState({
-      todos: this.state.todos.map((todo, index) => {
-        if (index === indexToChange) {
-          return {
-            ...todo,
-            [property]: !todo[property]
-          }
-        }
-        return todo;
-      })
-    })
-  }
-
 
   // render the component
   render() {
@@ -215,7 +177,8 @@ class Todos extends Component {
 
 // setting state for app
 const mapStateToProps = state => ({
-  userId: state.auth.user.username
+  userId: state.auth.user.username,
+  todos: state.todos.todos
 });
 
 export default connect(mapStateToProps, {})(Todos);

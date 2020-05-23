@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import store from "../../store/store";
+import { updateStatus } from '../../store/actions/todoActions';
+import { connect } from 'react-redux';
 
 class Status extends Component {
   constructor(props){
@@ -15,6 +18,10 @@ class Status extends Component {
 
   //Adds current id passed from TodoItem parent and status of current todoItem in passed into function and sends a put request to the database to update information
   updateTodoStatus = (title, background) => {
+    // update status for active todo in global todos state
+    const index = this.props.todos.findIndex(todo => todo._id === this.state.id);
+    store.dispatch(updateStatus(index, title, background));
+
     const url = new URL('http://localhost:5000/api/todos/edit-status');
     // Adding parameters to url
     url.searchParams.append('id', this.state.id);
@@ -40,7 +47,6 @@ class Status extends Component {
     this.setState({optionsActive: false});
 
     this.updateTodoStatus(option.title, option.background);
-    this.props.updateStatus(this.state.id, option.title, option.background)
   }
 
   renderOptions = () => {
@@ -66,4 +72,9 @@ class Status extends Component {
   
 }
 
-export default Status;
+// setting state for app
+const mapStateToProps = state => ({
+  todos: state.todos.todos
+});
+
+export default connect(mapStateToProps, {})(Status);

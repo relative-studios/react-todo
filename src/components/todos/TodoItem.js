@@ -78,7 +78,9 @@ class TodoItem extends Component {
 
   render(){
     // User destructuring to grab todo item and deleteTodo method
-    const { todo, deleteTodoItem, updateStatus } = this.props;
+    const { todo, deleteTodoItem, updateTodoDate } = this.props;
+
+    // TODO create a constants file and start storing all config items in constants
     const statusOptions = [
       {
         title: '-',
@@ -143,7 +145,7 @@ class TodoItem extends Component {
           </div>
           <div className="col-2 h-100 my-auto">
             <Status 
-              status={this.state.status} options={statusOptions} id={this.props.todo._id} updateStatus={updateStatus}
+              status={this.state.status} options={statusOptions} id={this.props.todo._id}
             />
           </div>
           <div className="col-2 px-0 my-auto d-flex">
@@ -153,7 +155,7 @@ class TodoItem extends Component {
                 clearIcon={null}
                 calendarIcon={null}
                 className="date-picker"
-                onChange={date => this.handleUpdateDuedate(date)}
+                onChange={date => { this.handleUpdateDuedate(date); updateTodoDate(todo._id, date) }}
                 onCalendarClose={this.updateTodoDuedate}
               />
             </div>
