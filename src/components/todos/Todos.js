@@ -14,7 +14,7 @@ class Todos extends Component {
 
   componentDidMount() {
     store.dispatch(getTodos(this.props.userId));
-  }
+  } 
 
   renderTodoBuckets = () => {
     const statuses = ['-', 'in progress', 'complete'];
@@ -30,7 +30,7 @@ class Todos extends Component {
         let tempArr = [];
         // build temp array holding current buckets todos
         bucket.forEach((todo) => {
-          tempArr.push(<TodoItem key={todo.todoItem.id} todo={todo} updateTodoDate={this.updateInitialTodoDate} deleteTodoItem={this.handleDeleteTodoItem}/>);
+          tempArr.push(<TodoItem key={todo.todoItem.id} todo={todo}/>);
         })
 
         // Build markup for bucket
@@ -78,6 +78,7 @@ class Todos extends Component {
   } 
   */
 
+  // TODO move this to the TodoItem component
   handleDeleteTodoItem = (id) => {
     // Setting up base url for api call
     const url = new URL('http://localhost:5000/api/todos/delete');
@@ -85,12 +86,11 @@ class Todos extends Component {
     // Adding parameters to url
     url.searchParams.append('id', id);
 
-    // Sending call to api
+    // Sending call to api 
     fetch(url, {method: 'PUT'})
       .then(res => res.json())
       .then(response => {
         // TODO since we are not longer using local state, we need to update the global state
-
         // Setting new local state of todos
         /* 
         this.setState(prevState => {
@@ -105,6 +105,7 @@ class Todos extends Component {
       });
   }
 
+  // TODO move this to AddTodo component
   handleAddTodoItem = (task) => {
     // Setting up base url for api call
     const url = new URL('http://localhost:5000/api/todos/add');
@@ -124,7 +125,6 @@ class Todos extends Component {
       .then(res => res.json())
       .then(todo => {
         // TODO since we are not longer using local state, we need to update the global state
-
         // Setting new local state of todos
         /* 
         this.setState(prevState => {
