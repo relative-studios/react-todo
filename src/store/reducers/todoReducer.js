@@ -19,8 +19,7 @@ export default function(state = initialState, action) {
         ...state,
         todos: action.payload
       };
-    case UPDATE_STATUS:
-      
+    case UPDATE_STATUS:    
       todoCopy = {
         ...state.todos[action.payload.index]
       };
@@ -36,8 +35,7 @@ export default function(state = initialState, action) {
           ...state.todos.slice(action.payload.index + 1)
         ]
       }
-    case UPDATE_DUEDATE:
-      
+    case UPDATE_DUEDATE:     
       todoCopy = {
         ...state.todos[action.payload.index]
       };

@@ -9,6 +9,7 @@ import './TodoItem.scss';
 import PropTypes from 'prop-types';
 import store from "../../store/store";
 import { deleteTodo } from '../../store/actions/todoActions';
+import { statusOptions } from '../constants';
 
 class TodoItem extends Component {
   constructor(props){
@@ -95,23 +96,6 @@ class TodoItem extends Component {
   render(){
     // User destructuring to grab todo item and deleteTodo method
     const { todo } = this.props;
-
-    // TODO create a constants file and start storing all config items in constants
-    const statusOptions = [
-      {
-        title: '-',
-        background: 'light'
-      },
-      {
-        title: 'in progress',
-        background: 'primary'
-      },
-      {
-        title: 'complete',
-        background: 'success'
-      }
-    ];
-
     let todoContent;
     
     const handleEnterKey = (e) => {
@@ -124,12 +108,13 @@ class TodoItem extends Component {
     }
 
     if (this.state.isInput) {
-      todoContent = <input 
-                      className={`w-100 todo-item .text-truncate d-block form-control border-0`} 
-                      value={this.state.todoTitle} 
-                      onChange={e => this.onTodoTitleChange(e.target.value)} 
-                      onKeyDown={handleEnterKey}
-                    />;
+      todoContent 
+        = <input 
+            className={`w-100 todo-item .text-truncate d-block form-control border-0`} 
+            value={this.state.todoTitle} 
+            onChange={e => this.onTodoTitleChange(e.target.value)} 
+            onKeyDown={handleEnterKey}
+          />;
     } else {
       todoContent = <p className={`w-100 todo-item .text-truncate d-block form-control border-0`}>{this.state.todoTitle}</p>
     }
@@ -153,13 +138,13 @@ class TodoItem extends Component {
           </div>
           <div className="col-2 h-100 my-auto">
             <Status 
-              status={this.state.status} options={statusOptions} id={this.props.todo._id}
+              status={this.state.status} options={statusOptions} id={todo._id}
             />
           </div>
           <div className="col-2 px-0 my-auto d-flex">
             <div className="flex-center w-100">
               <Duedate 
-                duedate={this.state.duedate} id={this.props.todo._id}
+                duedate={this.state.duedate} id={todo._id}
               />  
             </div>
           </div>
