@@ -1,8 +1,9 @@
 import { 
   SET_TODOS, 
   UPDATE_STATUS, 
+  UPDATE_DUEDATE, 
   DELETE_TODO,
-  ADD_TODO 
+  ADD_TODO  
 } from "./types";
 
 // Set logged in user
@@ -47,6 +48,18 @@ export const deleteTodo = (id) => {
 
   return {
     type: DELETE_TODO,
+    payload 
+  }
+}
+
+export const updateDuedate = (index, duedate) => {
+  const payload = {
+    index,
+    duedate
+  }
+
+  return {
+    type: UPDATE_DUEDATE,
     payload 
   }
 }

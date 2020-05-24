@@ -2,12 +2,14 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPen} from '@fortawesome/free-solid-svg-icons';
-import DatePicker from 'react-date-picker';
+//import DatePicker from 'react-date-picker';
 import Status from './Status';
+import Duedate from './Duedate';
 import './TodoItem.scss';
 import PropTypes from 'prop-types';
 import store from "../../store/store";
 import { deleteTodo } from '../../store/actions/todoActions';
+import { statusOptions } from '../constants';
 
 class TodoItem extends Component {
   constructor(props){
@@ -76,11 +78,6 @@ class TodoItem extends Component {
     });
   }
 
-  handleUpdateDuedate = duedate => {
-    this.setState({duedate});
-  }
-
-
   //When the edit svg is clicked, it keeps track of that click in local state to enable/disable input and fires off updateTodoTitle()
   handleToggleInput = () => {
     let input = this.state.isInput;
@@ -96,36 +93,10 @@ class TodoItem extends Component {
     }
   }
   
-
   render(){
     // User destructuring to grab todo item and deleteTodo method
-    const { todo, updateTodoDate } = this.props;
-
-    // TODO create a constants file and start storing all config items in constants
-    const statusOptions = [
-      {
-        title: '-',
-        background: 'light'
-      },
-      {
-        title: 'in progress',
-        background: 'primary'
-      },
-      {
-        title: 'complete',
-        background: 'success'
-      }
-    ];
-
+    const { todo } = this.props;
     let todoContent;
-    let duedateDate;
-    
-    // Handling in case there is no duedate assigned
-    if (this.state.duedate === "") {
-      duedateDate="";
-    } else {
-      duedateDate=new Date(this.state.duedate);
-    }
     
     const handleEnterKey = (e) => {
       if (e.key === 'Enter') {
@@ -137,12 +108,13 @@ class TodoItem extends Component {
     }
 
     if (this.state.isInput) {
-      todoContent = <input 
-                      className={`w-100 todo-item .text-truncate d-block form-control border-0`} 
-                      value={this.state.todoTitle} 
-                      onChange={e => this.onTodoTitleChange(e.target.value)} 
-                      onKeyDown={handleEnterKey}
-                    />;
+      todoContent 
+        = <input 
+            className={`w-100 todo-item .text-truncate d-block form-control border-0`} 
+            value={this.state.todoTitle} 
+            onChange={e => this.onTodoTitleChange(e.target.value)} 
+            onKeyDown={handleEnterKey}
+          />;
     } else {
       todoContent = <p className={`w-100 todo-item .text-truncate d-block form-control border-0`}>{this.state.todoTitle}</p>
     }
@@ -166,18 +138,14 @@ class TodoItem extends Component {
           </div>
           <div className="col-2 h-100 my-auto">
             <Status 
-              status={this.state.status} options={statusOptions} id={this.props.todo._id}
+              status={this.state.status} options={statusOptions} id={todo._id}
             />
           </div>
           <div className="col-2 px-0 my-auto d-flex">
             <div className="flex-center w-100">
-              <DatePicker
-                value={duedateDate}
-                clearIcon={null}
-                calendarIcon={null}
-                className="date-picker"
-                onChange={date => { this.handleUpdateDuedate(date); updateTodoDate(todo._id, date) }}
-              />
+              <Duedate 
+                duedate={this.state.duedate} id={todo._id}
+              />  
             </div>
           </div>
           <div className="col ml-auto d-block">
