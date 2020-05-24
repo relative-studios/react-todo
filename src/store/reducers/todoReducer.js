@@ -1,7 +1,9 @@
 import {
   SET_TODOS,
   UPDATE_STATUS,
-  UPDATE_DUEDATE
+  UPDATE_DUEDATE,
+  DELETE_TODO,
+  ADD_TODO
 } from "../actions/types";
 
 const initialState = {
@@ -48,6 +50,22 @@ export default function(state = initialState, action) {
           ...state.todos.slice(0, action.payload.index),
           todoCopy,
           ...state.todos.slice(action.payload.index + 1)
+        ]
+      }
+
+    case DELETE_TODO:
+      const todosCopytoDelete = [...state.todos];
+
+      return {
+        ...state,
+        todos: todosCopytoDelete.filter(todo => todo._id !== action.payload.id)
+      }
+    case ADD_TODO:
+      return {
+        ...state,
+        todos: [
+          action.payload.todo,
+          ...state.todos
         ]
       }
     default:

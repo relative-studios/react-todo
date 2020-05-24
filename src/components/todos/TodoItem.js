@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPen} from '@fortawesome/free-solid-svg-icons';
 //import DatePicker from 'react-date-picker';
@@ -6,6 +7,8 @@ import Status from './Status';
 import Duedate from './Duedate';
 import './TodoItem.scss';
 import PropTypes from 'prop-types';
+import store from "../../store/store";
+import { deleteTodo } from '../../store/actions/todoActions';
 
 class TodoItem extends Component {
   constructor(props){
@@ -16,6 +19,24 @@ class TodoItem extends Component {
       duedate: props.todo.todoItem.duedate,
       status: props.todo.todoItem.status || '-',
     }
+  }
+
+  handleDeleteTodoItem = (id) => {
+    const url = new URL('http://localhost:5000/api/todos/delete');
+
+    // Adding parameters to url
+    url.searchParams.append('id', id);
+
+    // Sending call to api 
+    fetch(url, {method: 'PUT'})
+      .then(res => res.json())
+      .then(() => {
+        // update status for active todo in global todos state
+        store.dispatch(deleteTodo(this.props.todo._id))
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   //Adds current id and title of current todoItem in local state and sends a put request to the database to update information
@@ -73,7 +94,7 @@ class TodoItem extends Component {
   
   render(){
     // User destructuring to grab todo item and deleteTodo method
-    const { todo, deleteTodoItem } = this.props;
+    const { todo } = this.props;
 
     // TODO create a constants file and start storing all config items in constants
     const statusOptions = [
@@ -148,7 +169,7 @@ class TodoItem extends Component {
               size="lg" 
               color="danger" 
               className="float-right text-danger pointer m-2 pr-1"
-              onClick={() => deleteTodoItem(todo._id)}
+              onClick={() => this.handleDeleteTodoItem(todo._id)}
             />
           </div>
         </div>
@@ -161,5 +182,9 @@ TodoItem.propTypes = {
   todo: PropTypes.object.isRequired, 
 }
 
-export default TodoItem
+// setting state for app
+const mapStateToProps = state => ({
+  todos: state.todos.todos
+});
 
+export default connect(mapStateToProps, {})(TodoItem);

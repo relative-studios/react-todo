@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
+import store from "../../store/store";
+import { addTodo } from '../../store/actions/todoActions';
 
 class AddTodo extends Component {
   constructor(props) {
@@ -11,8 +13,35 @@ class AddTodo extends Component {
     };
   }
 
+  // TODO move this to AddTodo component
+  handleAddTodoItem = (task) => {
+    // Setting up base url for api call
+    const url = new URL('http://localhost:5000/api/todos/add');
+    const todoBody = {
+      task,
+      userId: this.props.userId
+    }
+
+    // Sending call to api
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(todoBody)
+    })
+      .then(res => res.json())
+      .then((todo) => {
+        console.log(todo);
+        // update status for active todo in global todos state
+        store.dispatch(addTodo(todo))
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   render(){
-    const { addTodoItem }=this.props;
     let userInput = React.createRef();
 
     const handleIsValid = () => {
@@ -28,7 +57,7 @@ class AddTodo extends Component {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      addTodoItem(userInput.current.value, this.props.userId);
+      this.handleAddTodoItem(userInput.current.value);
       e.currentTarget.reset();
       handleIsValid();
     }
@@ -65,7 +94,6 @@ class AddTodo extends Component {
 }
 
 AddTodo.propTypes = {
-  addTodoItem: PropTypes.func.isRequired,
   userInput: PropTypes.string
 }
 
