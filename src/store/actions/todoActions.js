@@ -1,4 +1,9 @@
-import { SET_TODOS, UPDATE_STATUS } from "./types";
+import { 
+  SET_TODOS, 
+  UPDATE_STATUS, 
+  DELETE_TODO,
+  ADD_TODO 
+} from "./types";
 
 // Set logged in user
 export const getTodos = (id) => dispatch => {
@@ -28,9 +33,31 @@ export const updateStatus = (index, title, background) => {
     title,
     background
   }
-  
+
   return {
     type: UPDATE_STATUS,
+    payload
+  }
+}
+
+export const deleteTodo = (id) => {
+  const payload = {
+    id
+  }
+
+  return {
+    type: DELETE_TODO,
     payload 
+  }
+}
+
+export const addTodo = (todo) => {
+  const payload = {
+    todo
+  }
+
+  return {
+    type: ADD_TODO,
+    payload
   }
 }

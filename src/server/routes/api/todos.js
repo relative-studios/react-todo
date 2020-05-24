@@ -43,7 +43,7 @@ router.post("/add", (req, res) => {
 
   // Save Todo item to DB
   newTodo.save()
-    .then((todo) => res.json(todo))
+    .then(() => res.json(newTodo))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 

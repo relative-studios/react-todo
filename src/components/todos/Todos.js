@@ -69,92 +69,6 @@ class Todos extends Component {
     return todos;
   }
 
-  // TODO move this as a dispatch in the datePicker component
-  /* 
-  updateInitialTodoDate = (id, date) => {
-    this.setState(state => {
-      state.todos.filter(p => p._id === id)[0].todoItem.duedate = date
-    })
-  } 
-  */
-
-  // TODO move this to the TodoItem component
-  handleDeleteTodoItem = (id) => {
-    // Setting up base url for api call
-    const url = new URL('http://localhost:5000/api/todos/delete');
-
-    // Adding parameters to url
-    url.searchParams.append('id', id);
-
-    // Sending call to api 
-    fetch(url, {method: 'PUT'})
-      .then(res => res.json())
-      .then(response => {
-        // TODO since we are not longer using local state, we need to update the global state
-        // Setting new local state of todos
-        /* 
-        this.setState(prevState => {
-          return {
-            todos: prevState.todos.filter(p => p._id !== id)
-          };
-        }); 
-        */
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  // TODO move this to AddTodo component
-  handleAddTodoItem = (task) => {
-    // Setting up base url for api call
-    const url = new URL('http://localhost:5000/api/todos/add');
-    const todoBody = {
-      task,
-      userId: this.props.userId
-    }
-
-    // Sending call to api
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(todoBody)
-    })
-      .then(res => res.json())
-      .then(todo => {
-        // TODO since we are not longer using local state, we need to update the global state
-        // Setting new local state of todos
-        /* 
-        this.setState(prevState => {
-          return {
-            todos: [
-              {
-                _id: todo._id,
-                userId: this.props.userId,
-                todoItem: {
-                  id: new Date().getTime(),
-                  title: task,
-                  completed: false,
-                  duedate: "",
-                  status: {
-                    title: "-",
-                    background: "light"
-                  }
-                }
-              },
-              ...prevState.todos
-            ]
-          }
-        }); 
-        */
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
   // render the component
   render() {
     return (
@@ -164,7 +78,7 @@ class Todos extends Component {
         </div>
         <div className="container">
           <div className="row">
-            <AddTodo addTodoItem = {this.handleAddTodoItem}/>
+            <AddTodo addTodoItem={this.handleAddTodoItem} user={this.state.userId}/>
           </div>
           {
             this.renderTodoBuckets()
