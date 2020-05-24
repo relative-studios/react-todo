@@ -1,4 +1,4 @@
-import { SET_TODOS, UPDATE_STATUS } from "./types";
+import { SET_TODOS, UPDATE_STATUS, UPDATE_DUEDATE } from "./types";
 
 // Set logged in user
 export const getTodos = (id) => dispatch => {
@@ -31,6 +31,18 @@ export const updateStatus = (index, title, background) => {
   
   return {
     type: UPDATE_STATUS,
+    payload 
+  }
+}
+
+export const updateDuedate = (index, duedate) => {
+  const payload = {
+    index,
+    duedate
+  }
+
+  return {
+    type: UPDATE_DUEDATE,
     payload 
   }
 }

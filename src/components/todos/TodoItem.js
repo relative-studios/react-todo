@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPen} from '@fortawesome/free-solid-svg-icons';
-import DatePicker from 'react-date-picker';
+//import DatePicker from 'react-date-picker';
 import Status from './Status';
+import Duedate from './Duedate';
 import './TodoItem.scss';
 import PropTypes from 'prop-types';
 
@@ -55,11 +56,6 @@ class TodoItem extends Component {
     });
   }
 
-  handleUpdateDuedate = duedate => {
-    this.setState({duedate});
-  }
-
-
   //When the edit svg is clicked, it keeps track of that click in local state to enable/disable input and fires off updateTodoTitle()
   handleToggleInput = () => {
     let input = this.state.isInput;
@@ -75,10 +71,9 @@ class TodoItem extends Component {
     }
   }
   
-
   render(){
     // User destructuring to grab todo item and deleteTodo method
-    const { todo, deleteTodoItem, updateTodoDate } = this.props;
+    const { todo, deleteTodoItem } = this.props;
 
     // TODO create a constants file and start storing all config items in constants
     const statusOptions = [
@@ -97,14 +92,6 @@ class TodoItem extends Component {
     ];
 
     let todoContent;
-    let duedateDate;
-    
-    // Handling in case there is no duedate assigned
-    if (this.state.duedate === "") {
-      duedateDate="";
-    } else {
-      duedateDate=new Date(this.state.duedate);
-    }
     
     const handleEnterKey = (e) => {
       if (e.key === 'Enter') {
@@ -150,14 +137,9 @@ class TodoItem extends Component {
           </div>
           <div className="col-2 px-0 my-auto d-flex">
             <div className="flex-center w-100">
-              <DatePicker
-                value={duedateDate}
-                clearIcon={null}
-                calendarIcon={null}
-                className="date-picker"
-                onChange={date => { this.handleUpdateDuedate(date); updateTodoDate(todo._id, date) }}
-                onCalendarClose={this.updateTodoDuedate}
-              />
+              <Duedate 
+                duedate={this.state.duedate} id={this.props.todo._id}
+              />  
             </div>
           </div>
           <div className="col ml-auto d-block">

@@ -1,6 +1,7 @@
 import {
   SET_TODOS,
-  UPDATE_STATUS
+  UPDATE_STATUS,
+  UPDATE_DUEDATE
 } from "../actions/types";
 
 const initialState = {
@@ -8,6 +9,8 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
+  let todoCopy = {};
+  
   switch (action.type) {
     case SET_TODOS:
       return {
@@ -15,14 +18,29 @@ export default function(state = initialState, action) {
         todos: action.payload
       };
     case UPDATE_STATUS:
-      let todoCopy = {};
-
+      
       todoCopy = {
         ...state.todos[action.payload.index]
       };
 
       todoCopy.todoItem.status.title = action.payload.title;
       todoCopy.todoItem.status.background = action.payload.background
+
+      return {
+        ...state,
+        todos: [
+          ...state.todos.slice(0, action.payload.index),
+          todoCopy,
+          ...state.todos.slice(action.payload.index + 1)
+        ]
+      }
+    case UPDATE_DUEDATE:
+      
+      todoCopy = {
+        ...state.todos[action.payload.index]
+      };
+
+      todoCopy.todoItem.duedate = action.payload.duedate;
 
       return {
         ...state,
