@@ -4,6 +4,7 @@ import TodoItem from './TodoItem';
 import './Todos.scss';
 import AddTodo from './AddTodo';
 import store from "../../store/store";
+import { statusOptions } from '../constants';
 import { getTodos } from '../../store/actions/todoActions';
 
 class Todos extends Component {
@@ -17,7 +18,7 @@ class Todos extends Component {
   } 
 
   renderTodoBuckets = () => {
-    const statuses = ['-', 'in progress', 'complete'];
+    const statuses = statusOptions.map(status => status.title);
     const buckets = [];
     const todos = [];
 
