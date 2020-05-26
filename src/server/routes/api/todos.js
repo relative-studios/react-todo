@@ -86,6 +86,8 @@ router.put("/edit-title", (req, res) => {
 router.put("/edit-duedate", (req, res) => {
   // Grab the userId and duedate from the query
   const { id, duedate } = req.query;
+  const dueDate = new Date(duedate).getTime();
+  console.log(dueDate);
 
   // Search Todos collection for all todo items for username
 
@@ -93,7 +95,7 @@ router.put("/edit-duedate", (req, res) => {
     id,
     {
       $set: {
-        'todoItem.duedate': duedate
+        'todoItem.duedate': dueDate
       }
     }
   ).then(res.send('Todo date updated!'))
@@ -120,6 +122,41 @@ router.put("/edit-status", (req, res) => {
       }
     }
   ).then(res.send('Todo status updated!'))
+  .catch(err => res.status(400).json('Error' + err));
+});
+
+// @route GET api/todos/last-week
+// @desc GET stats for last weeks tasks
+// @access Public
+router.get("/last-week", (req, res) => {
+  const { id  } = req.query;
+  const currentDate = new Date();
+  const getLastWeek = (today) => {
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+  }
+
+  const lastWeek = getLastWeek(currentDate);
+
+  Todo.find(
+    {
+      'todoItem.userId': id,
+      "todoItem.duedate": {
+        "$gte": lastWeek.getTime(), 
+        "$lt": currentDate.getTime()
+      }
+    },
+  )
+  .then((todos) => {
+    const pastDue = todos.filter(todo => currentDate.getTime() >= todo.todoItem.duedate && todo.todoItem.status.title !== 'complete');
+    const completed = todos.filter(todo => todo.todoItem.status.title === 'complete');
+
+    const filteredTodos = {
+      pastDue,
+      completed
+    }
+
+    res.send(filteredTodos);
+  })
   .catch(err => res.status(400).json('Error' + err));
 });
 

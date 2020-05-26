@@ -32,7 +32,6 @@ class AddTodo extends Component {
     })
       .then(res => res.json())
       .then((todo) => {
-        console.log(todo);
         // update status for active todo in global todos state
         store.dispatch(addTodo(todo))
       })

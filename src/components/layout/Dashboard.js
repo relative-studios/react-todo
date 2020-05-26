@@ -4,13 +4,55 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../store/actions/authActions";
 
 class Dashboard extends Component {
+  state = {
+    todos: {}
+  }
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
   };
 
+  getLastWeeksTodos = (id) => {
+    const url = new URL('http://localhost:5000/api/todos/last-week');
+    url.searchParams.append('userId', id);
+
+    fetch(url, {
+      method: 'GET'
+    })
+      .then(res => res.json())
+      .then(todos => {
+        this.setState({'todos': todos});
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  renderList = (name) => {
+    const todos = [];
+
+    if (this.state.todos[name]) {
+      this.state.todos[name].forEach(todo => {
+       todos.push(<p className="todo-item" key={todo.todoItem.id}>{todo.todoItem.title}</p>)
+      });
+    }
+
+    return todos;
+  }
+
+  componentDidMount() {
+    this.getLastWeeksTodos(this.props.auth.user.username);
+  }
+
   render() {
     const { user } = this.props.auth;
+
+    let pastDue = this.state.todos.pastDue;
+    let completed = this.state.todos.completed;
+
+    if (pastDue) pastDue = pastDue.length;
+    if (completed) completed = completed.length;
 
     return (
       <div className="container">
@@ -20,27 +62,21 @@ class Dashboard extends Component {
               <h3 className="text-center w-100">Hello {user.name}, Here's this week at a glance:</h3>
             </div>
             <div className="row">
-              <div className="col-sm-4 mb-3">
+              <div className="col-12 mb-5">
                 <div className="card border-success">
                   <div className="card-body text-center">
-                    <h5 className="card-title">7 Tasks completed</h5>
+                    <h5 className="card-title">{`${completed} ${completed > 1 ? 'Tasks' : 'Task'}`} completed</h5>
                     <p className="card-text">Nice going! You were able to complete 7 out of the 8 tasks you created.</p>
+                    {this.renderList('completed')}
                   </div>
                 </div>
               </div>
-              <div className="col-sm-4 mb-3">
-                <div className="card border-warning">
-                  <div className="card-body text-center">
-                    <h5 className="card-title">3 Tasks Due Soon</h5>
-                    <p className="card-text">Be sure to take a look and determine if these can be completed on time!.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-4 mb-3">
+              <div className="col-12 mb-4">
                 <div className="card border-danger">
                   <div className="card-body text-center">
-                    <h5 className="card-title">1 Task Overdue</h5>
+                    <h5 className="card-title">{`${pastDue} ${pastDue > 1 ? 'Tasks' : 'Task'}`} Overdue</h5>
                     <p className="card-text">We can't always get to things on time, that's okay! Time to reschedule.</p>
+                    {this.renderList('pastDue')}
                   </div>
                 </div>
               </div>
