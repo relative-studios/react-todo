@@ -114,6 +114,7 @@ class TodoItem extends Component {
             value={this.state.todoTitle} 
             onChange={e => this.onTodoTitleChange(e.target.value)} 
             onKeyDown={handleEnterKey}
+            onMouseOut={e => this.handleToggleInput()}
           />;
     } else {
       todoContent = <p className={`w-100 todo-item .text-truncate d-block form-control border-0`}>{this.state.todoTitle}</p>

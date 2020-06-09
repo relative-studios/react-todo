@@ -16,6 +16,21 @@ class Status extends Component {
     }
   }
 
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleClickOutside, false);
+
+  componentWillUnmount() {
+    document.addEventListener('mousedown', this.handleClickOutside, false);
+  }
+
+  handleClickOutside = (e) => {
+    if (this.node.contains(e.target)) {
+      return;
+    }
+
+    this.toggleOptions(false);
+  }
+
   //Adds current id passed from TodoItem parent and status of current todoItem in passed into function and sends a put request to the database to update information
   updateTodoStatus = (title, background) => {
     // update status for active todo in global todos state
@@ -37,8 +52,8 @@ class Status extends Component {
       });
   }
 
-  toggleOptions = () => {
-    this.setState({optionsActive: true});
+  toggleOptions = (option) => {
+    this.setState({optionsActive: option});
   }
 
   setOption = (option) => {
@@ -61,8 +76,8 @@ class Status extends Component {
 
   render() {
     return (
-      <div className="position-relative h-100 status">
-        <div onClick={this.toggleOptions} className={`w-100 h-100 text-center status-overlay bg-${this.state.optionsBackground} ${this.state.optionsActive ? "hidden" : ""}`}>{ this.state.status }</div>
+      <div className="position-relative h-100 status" ref={node => this.node = node}>
+        <div onClick={e => this.toggleOptions(true)} className={`w-100 h-100 text-center status-overlay bg-${this.state.optionsBackground} ${this.state.optionsActive ? "hidden" : ""}`}>{ this.state.status }</div>
         <div className={`status-options ${this.state.optionsActive ? "" : "hidden"}`}>
           {this.renderOptions()}
         </div>
