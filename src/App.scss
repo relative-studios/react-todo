@@ -41,6 +41,8 @@ body {
 .body-container {
   width: calc(100% - 85px);
   overflow-y: scroll;
+  overflow-x: hidden;
+  margin-left: 15px;
 }
 
 .container {
@@ -92,6 +94,22 @@ body {
   height: 55px;
 }
 
+.profile-nav {
+  top: 5px;
+  left: 0;
+  right: 0;
+  padding-left: 14px;
+  position: absolute;
+}
+
+.hide-desktop {
+  display: none;
+}
+
+.hide-mobile {
+  display: inline;
+}
+
 @media screen and (max-width: 768px) {
   .nav-container {
     width: 100%;
@@ -101,6 +119,7 @@ body {
   .body-container {
     width: 100%;
     overflow-y: scroll;
+    margin-left: 0;
   }
 
   .custom-nav-link {
@@ -114,5 +133,21 @@ body {
   .todo-item {
     font-size: 16px;
     margin-top: 7px;
+  }
+
+  .profile-nav {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    padding-left: 0;
+  }
+
+  .hide-desktop {
+    display: inline;
+  }
+
+  .hide-mobile {
+    display: none;
   }
 }

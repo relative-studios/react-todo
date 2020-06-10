@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import path from 'path';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../store/actions/authActions";
@@ -34,7 +35,7 @@ class Dashboard extends Component {
 
     if (this.state.todos[name]) {
       this.state.todos[name].forEach(todo => {
-       todos.push(<p className="todo-item" key={todo.todoItem.id}>{todo.todoItem.title}</p>)
+       todos.push(<li className="list-group-item" key={todo.todoItem.id}>{todo.todoItem.title}</li>)
       });
     }
 
@@ -59,24 +60,30 @@ class Dashboard extends Component {
         <div className="flex-container">
           <div className="w-100">
             <div className="row mb-4">
-              <h3 className="text-center w-100">Hello {user.name}, Here's this week at a glance:</h3>
+              <h3 className="text-center w-100">Hello {user.name}, Here's last week at a glance:</h3>
             </div>
-            <div className="row">
-              <div className="col-12 mb-5">
-                <div className="card border-success">
+            <div className="row mb-4">
+              <div className="col-12 col-md-6 d-flex align-items-stretch">
+                <div className="card">
+                  <img class="card-img-top" src="completed.jpg" alt="image" />
                   <div className="card-body text-center">
                     <h5 className="card-title">{`${completed} ${completed > 1 ? 'Tasks' : 'Task'}`} completed</h5>
                     <p className="card-text">Nice going! You were able to complete 7 out of the 8 tasks you created.</p>
-                    {this.renderList('completed')}
+                    <ul className="list-group">
+                     {this.renderList('completed')}
+                    </ul>
                   </div>
                 </div>
               </div>
-              <div className="col-12 mb-4">
-                <div className="card border-danger">
+              <div className="col-12 col-md-6 d-flex align-items-stretch">
+                <div className="card">
+                  <img class="card-img-top" src="past-due.jpg" alt="image" />
                   <div className="card-body text-center">
                     <h5 className="card-title">{`${pastDue} ${pastDue > 1 ? 'Tasks' : 'Task'}`} Overdue</h5>
                     <p className="card-text">We can't always get to things on time, that's okay! Time to reschedule.</p>
-                    {this.renderList('pastDue')}
+                    <ul className="list-group">
+                      {this.renderList('pastDue')}
+                    </ul>
                   </div>
                 </div>
               </div>

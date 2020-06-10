@@ -41,18 +41,18 @@ class Todos extends Component {
               <div className="row">
                 <div className="mx-3 mx-sm-0 w-100">
                   <div className="row">
-                    <div className="col-7">
+                    <div className="col-5 col-lg-7">
                       <p className="todo-header capitalize">
                         {bucket[0].todoItem.status.title === '-' ? 'Todo' : bucket[0].todoItem.status.title}
                       </p>
                     </div>
-                    <div className="col-2 px-0 h-100 my-auto">
+                    <div className="col-3 col-lg-2 px-0 h-100 my-auto">
                       <p className="todo-header rounded-header left">Status</p>
                     </div>
-                    <div className="col-2 px-0 my-auto d-block">
+                    <div className="col-3 col-lg-2 px-0 my-auto d-block">
                       <p className="todo-header rounded-header right">Due Date</p>
                     </div>
-                    <div className="col ml-auto d-block"></div>
+                    <div className="col-1 ml-auto d-block"></div>
                   </div>
                 </div>
               </div>

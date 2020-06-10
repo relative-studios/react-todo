@@ -122,7 +122,7 @@ class TodoItem extends Component {
     return (
       <div className="clearfix todo">
         <div className="row">
-          <div className="col-7">
+          <div className="col-5 col-lg-7">
             <div className="has-overlay w-100">
               <div className={`overlay h-100 ${this.state.isInput ? 'd-none':'d-block'}`}>
                 <FontAwesomeIcon 
@@ -136,19 +136,19 @@ class TodoItem extends Component {
               {todoContent}
             </div>
           </div>
-          <div className="col-2 h-100 my-auto">
+          <div className="col-3 col-lg-2 h-100 my-auto">
             <Status 
               status={this.state.status} options={statusOptions} id={todo._id}
             />
           </div>
-          <div className="col-2 px-0 my-auto d-flex">
+          <div className="col-3 col-lg-2 px-0 my-auto d-flex">
             <div className="flex-center w-100">
               <Duedate 
                 duedate={this.state.duedate} id={todo._id}
               />  
             </div>
           </div>
-          <div className="col ml-auto d-block">
+          <div className="col-1 ml-auto d-block">
             <FontAwesomeIcon 
               icon={faTrashAlt} 
               size="lg" 
