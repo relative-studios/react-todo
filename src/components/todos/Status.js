@@ -18,7 +18,8 @@ class Status extends Component {
 
   componentWillMount() {
     document.addEventListener('mousedown', this.handleClickOutside, false);
-
+  }
+  
   componentWillUnmount() {
     document.addEventListener('mousedown', this.handleClickOutside, false);
   }
