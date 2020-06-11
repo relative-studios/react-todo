@@ -97,7 +97,8 @@ class TodoItem extends Component {
     // User destructuring to grab todo item and deleteTodo method
     const { todo } = this.props;
     let todoContent;
-    
+    let todoPastDue;
+
     const handleEnterKey = (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
@@ -118,6 +119,12 @@ class TodoItem extends Component {
           />;
     } else {
       todoContent = <p className={`w-100 todo-item .text-truncate d-block form-control border-0`}>{this.state.todoTitle}</p>
+    }
+
+    if (new Date().getTime() > todo.todoItem.duedate && todo.todoItem.status.title !== 'complete') {
+      todoPastDue = true;
+    } else {
+      todoPastDue = false;
     }
 
     return (
@@ -143,7 +150,7 @@ class TodoItem extends Component {
             />
           </div>
           <div className="col-3 col-lg-2 px-0 my-auto d-flex">
-            <div className="flex-center w-100">
+            <div className={`flex-center w-100 ${todoPastDue ? 'bg-danger': null}`}>
               <Duedate 
                 duedate={this.state.duedate} id={todo._id}
               />  

@@ -19,17 +19,19 @@ class Status extends Component {
   componentWillMount() {
     document.addEventListener('mousedown', this.handleClickOutside, false);
   }
-  
+
   componentWillUnmount() {
     document.addEventListener('mousedown', this.handleClickOutside, false);
   }
 
   handleClickOutside = (e) => {
-    if (this.node.contains(e.target)) {
-      return;
+    if (this.node) {
+      if (this.node.contains(e.target)) {
+        return;
+      } else {
+        this.toggleOptions(false);
+      }
     }
-
-    this.toggleOptions(false);
   }
 
   //Adds current id passed from TodoItem parent and status of current todoItem in passed into function and sends a put request to the database to update information
