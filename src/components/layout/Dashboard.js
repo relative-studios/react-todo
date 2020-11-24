@@ -11,15 +11,16 @@ class Dashboard extends Component {
 
   onLogoutClick = e => {
     e.preventDefault();
-    this.props.logoutUser();
+    logoutUser();
   };
 
   getLastWeeksTodos = (id) => {
-    const url = new URL('http://localhost:5000/api/todos/last-week');
-    url.searchParams.append('userId', id);
+    const searchParams = new URLSearchParams();
+    searchParams.set('userId', id);
 
-    fetch(url, {
-      method: 'GET'
+    fetch('/api/todos/last-week', {
+      method: 'GET',
+      searchParams
     })
       .then(res => res.json())
       .then(todos => {
@@ -65,7 +66,7 @@ class Dashboard extends Component {
             <div className="row mb-4">
               <div className="col-12 col-md-6 d-flex align-items-stretch">
                 <div className="card">
-                  <img class="card-img-top" src="completed.jpg" alt="image" />
+                  <img className="card-img-top" src="completed.jpg" alt="image" />
                   <div className="card-body text-center">
                     <h5 className="card-title">{`${completed} ${completed > 1 ? 'Tasks' : 'Task'}`} completed</h5>
                     <p className="card-text">Nice going! You were able to complete 7 out of the 8 tasks you created.</p>
@@ -77,7 +78,7 @@ class Dashboard extends Component {
               </div>
               <div className="col-12 col-md-6 d-flex align-items-stretch">
                 <div className="card">
-                  <img class="card-img-top" src="past-due.jpg" alt="image" />
+                  <img className="card-img-top" src="past-due.jpg" alt="image" />
                   <div className="card-body text-center">
                     <h5 className="card-title">{`${pastDue} ${pastDue > 1 ? 'Tasks' : 'Task'}`} Overdue</h5>
                     <p className="card-text">We can't always get to things on time, that's okay! Time to reschedule.</p>
@@ -89,7 +90,8 @@ class Dashboard extends Component {
               </div>
             </div>           
             <div className="row d-flex justify-content-center mt-3">
-              <a href="/todos" className="btn btn-info text-center">Go to Tasks</a>
+              <a href="/todos" className="btn btn-info text-center mx-2">Go to Tasks</a>
+              <button className="btn btn-warning text-center mx-2" onClick={logoutUser()}>Logout</button>
             </div>
           </div>
         </div>

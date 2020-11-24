@@ -22,7 +22,7 @@ class Status extends Component {
     const index = this.props.todos.findIndex(todo => todo._id === this.state.id);
     store.dispatch(updateStatus(index, title, background));
 
-    const url = new URL('http://localhost:5000/api/todos/edit-status');
+    const url = new URL('/api/todos/edit-status');
     // Adding parameters to url
     url.searchParams.append('id', this.state.id);
     url.searchParams.append('title', title);

@@ -16,7 +16,7 @@ class AddTodo extends Component {
   // TODO move this to AddTodo component
   handleAddTodoItem = (task) => {
     // Setting up base url for api call
-    const url = new URL('http://localhost:5000/api/todos/add');
+    const url = new URL('/api/todos/add');
     const todoBody = {
       task,
       userId: this.props.userId
