@@ -1,12 +1,76 @@
-import { SET_TODOS } from '../reducers/types';
+import { 
+  SET_TODOS, 
+  UPDATE_STATUS, 
+  UPDATE_DUEDATE, 
+  DELETE_TODO,
+  ADD_TODO  
+} from "./types";
 
-// Actions send a payload to their perspective reducer where the data gets manipulated in the store
+// Set logged in user
+export const getTodos = (id) => dispatch => {
+  const url = new URL('/api/todos');
+  let todoItems = [];
+  url.searchParams.append('userId', id);
 
-export const setInitialTodos = (todoItems) => dispatch => {
-  console.log('here');
-  console.log(todoItems);
-  dispatch({
-    type: SET_TODOS,
-    payload: todoItems
+  fetch(url, {
+    method: 'GET'
   })
+    .then(res => res.json())
+    .then(todos => {
+      todoItems = todos;
+      dispatch({
+        type: SET_TODOS,
+        payload: todoItems
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+
+export const updateStatus = (index, title, background) => {
+  const payload = {
+    index,
+    title,
+    background
+  }
+
+  return {
+    type: UPDATE_STATUS,
+    payload
+  }
+}
+
+export const deleteTodo = (id) => {
+  const payload = {
+    id
+  }
+
+  return {
+    type: DELETE_TODO,
+    payload 
+  }
+}
+
+export const updateDuedate = (index, duedate) => {
+  const payload = {
+    index,
+    duedate
+  }
+
+  return {
+    type: UPDATE_DUEDATE,
+    payload 
+  }
+}
+
+export const addTodo = (todo) => {
+  const payload = {
+    todo
+  }
+
+  return {
+    type: ADD_TODO,
+    payload
+  }
 }

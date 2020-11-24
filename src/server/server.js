@@ -7,7 +7,6 @@ const passport = require("passport");
 
 
 // ROUTE IMPORTS
-const dashboardRouter = require('./routes/api/dashboard');
 const userRouter = require('./routes/api/users');
 const todosRouter = require('./routes/api/todos');
 
@@ -35,7 +34,6 @@ app.use(bodyParser.json());
 
 
 // ROUTES
-app.use('/api/', dashboardRouter);
 app.use('/api/users', userRouter);
 app.use('/api/todos', todosRouter);
 
@@ -46,7 +44,8 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   }
 );
 

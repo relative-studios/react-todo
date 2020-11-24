@@ -1,102 +1,98 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
 import './Todos.scss';
 import AddTodo from './AddTodo';
+import store from "../../store/store";
+import { statusOptions } from '../constants';
+import { getTodos } from '../../store/actions/todoActions';
 
 class Todos extends Component {
   state = {
-    todos: this.props.todos
+    userId: '',
+    todos: []
   }
 
   componentDidMount() {
-    this.getTodoItems();
-  }
+    store.dispatch(getTodos(this.props.userId));
+  } 
 
-  getTodoItems = () => {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-    .then(res => res.json())
-    .then(todos => {
-      const todoItems = !Array.isArray(todos) ? new Array(todos) : todos;
-      this.setState({ todos: todoItems })
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
+  renderTodoBuckets = () => {
+    const statuses = statusOptions.map(status => status.title);
+    const buckets = [];
+    const todos = [];
 
-
-  renderTodoItems = () => {
-    let todos = [];
-    
-    // Slicing to only show first 10 results for now
-    this.state.todos.forEach((todo) => {
-      todos.push(<TodoItem key={todo.id} todo={todo} deleteTodoItem={this.handleDeleteTodoItem}/>);
+    statuses.forEach((status) => {
+      buckets.push(this.props.todos.filter((todo) => todo.todoItem.status.title === status))
     });
     
-    return todos;
-  }
+    buckets.forEach((bucket) => {
+      if (bucket.length) {
+        let tempArr = [];
+        // build temp array holding current buckets todos
+        bucket.forEach((todo) => {
+          tempArr.push(<TodoItem key={todo.todoItem.id} todo={todo}/>);
+        })
 
-  handleDeleteTodoItem = (id) => {
-    this.setState(prevState => {
-        return {
-          todos: prevState.todos.filter(p => p.userId === 1 && p.id !== id)
-        };
-    });
-  }
-
-  handleAddTodoItem = (task) => {
-    let arrayLengthIndex = this.state.todos.length;
-
-    this.setState(prevState => {
-      return {
-        todos: [
-          {
-            key: arrayLengthIndex+1,
-            userId: 1,
-            id: arrayLengthIndex+1,
-            title: task,
-            completed: false
-          },
-          ...prevState.todos
-        ]
+        // Build markup for bucket
+        todos.push(
+          <div className="row" key={bucket[0].todoItem.id}>
+            <div className="mx-3 mx-sm-0 w-100">
+              <div className="row">
+                <div className="mx-3 mx-sm-0 w-100">
+                  <div className="row">
+                    <div className="col-5 col-lg-7">
+                      <p className="todo-header capitalize">
+                        {bucket[0].todoItem.status.title === '-' ? 'Todo' : bucket[0].todoItem.status.title}
+                      </p>
+                    </div>
+                    <div className="col-3 col-lg-2 px-0 h-100 my-auto">
+                      <p className="todo-header rounded-header left">Status</p>
+                    </div>
+                    <div className="col-3 col-lg-2 px-0 my-auto d-block">
+                      <p className="todo-header rounded-header right">Due Date</p>
+                    </div>
+                    <div className="col-1 ml-auto d-block"></div>
+                  </div>
+                </div>
+              </div>
+              {
+                // place the temp array with current buckets todos
+                tempArr
+              }
+            </div>
+          </div>
+        )
+        tempArr = [];
       }
-      
-    })
+    });
+
+    return todos;
   }
 
   // render the component
   render() {
     return (
-      <div className="w-100">
-        <div className="py-3 bg-primary text-white text-center">
-          <h1 className="mb-0">TODOS</h1>
+      <div>
+        <div className="py-3 text-center">
+          <h1 className="mb-0 pb-0">TODOS</h1> 
         </div>
         <div className="container">
           <div className="row">
-            <AddTodo addTodoItem = {this.handleAddTodoItem}/>
+            <AddTodo addTodoItem={this.handleAddTodoItem} user={this.state.userId}/>
           </div>
-          <div className="row">
-            <div className="col-12">
-              <div className="mx-3 mx-sm-0">
-                {this.renderTodoItems()}
-              </div>
-            </div>
-          </div>
+          {
+            this.renderTodoBuckets()
+          }
         </div>
       </div>
     )
   }
 }
 
-// validate prop types 
-Todos.propTypes = {
-  todos: PropTypes.array.isRequired
-}
-
 // setting state for app
 const mapStateToProps = state => ({
+  userId: state.auth.user.username,
   todos: state.todos.todos
 });
 
