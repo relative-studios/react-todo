@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.2",
     "classnames": "^2.2.6",
+    "copyfiles": "^2.4.0",
     "immer": "^6.0.9",
     "is-empty": "^1.2.0",
     "jwt-decode": "^2.2.0",
@@ -31,7 +32,8 @@
   "scripts": {
     "start": "set PORT=4000 && react-scripts start",
     "serve": "nodemon ./src/server/server.js",
-    "build": "react-scripts build",
+    "copy-files": "copyfiles -u 1 ./build/**/*.* src/server/public",
+    "build": "react-scripts build && yarn run copy-files",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
