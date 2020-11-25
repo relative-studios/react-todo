@@ -8,7 +8,7 @@ import {
 
 // Set logged in user
 export const getTodos = (id) => dispatch => {
-  const url = new URL('/api/todos');
+  const url = new URL('https://simpletaskerapp.herokuapp.com/api/todos');
   let todoItems = [];
   url.searchParams.append('userId', id);
 

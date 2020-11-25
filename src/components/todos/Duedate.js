@@ -18,7 +18,7 @@ class Duedate extends Component {
     const index = this.props.todos.findIndex(todo => todo._id === this.state.id);
     store.dispatch(updateDuedate(index, duedate));
   
-    const url = new URL('/api/todos/edit-duedate');
+    const url = new URL('https://simpletaskerapp.herokuapp.com/api/todos/edit-duedate');
     // Adding parameters to url
     url.searchParams.append('id', this.state.id);
     url.searchParams.append('duedate', duedate);

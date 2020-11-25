@@ -18,7 +18,7 @@ class Dashboard extends Component {
     const searchParams = new URLSearchParams();
     searchParams.set('userId', id);
 
-    fetch('/api/todos/last-week', {
+    fetch('https://simpletaskerapp.herokuapp.com/api/todos/last-week', {
       method: 'GET',
       searchParams
     })

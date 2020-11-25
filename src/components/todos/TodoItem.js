@@ -23,7 +23,7 @@ class TodoItem extends Component {
   }
 
   handleDeleteTodoItem = (id) => {
-    const url = new URL('/api/todos/delete');
+    const url = new URL('https://simpletaskerapp.herokuapp.com/api/todos/delete');
 
     // Adding parameters to url
     url.searchParams.append('id', id);
@@ -42,7 +42,7 @@ class TodoItem extends Component {
 
   //Adds current id and title of current todoItem in local state and sends a put request to the database to update information
   updateTodoTitle = () => {
-    const url = new URL('/api/todos/edit-title');
+    const url = new URL('https://simpletaskerapp.herokuapp.com/api/todos/edit-title');
     // Adding parameters to url
     url.searchParams.append('id', this.props.todo._id);
     url.searchParams.append('todoTitle', this.state.todoTitle);
@@ -58,7 +58,7 @@ class TodoItem extends Component {
 
   //Adds current id and duedate of current todoItem in local state and sends a put request to the database to update information
   updateTodoDuedate = () => {
-    const url = new URL('/api/todos/edit-duedate');
+    const url = new URL('https://simpletaskerapp.herokuapp.com/api/todos/edit-duedate');
     // Adding parameters to url
     url.searchParams.append('id', this.props.todo._id);
     url.searchParams.append('duedate', this.state.duedate);
