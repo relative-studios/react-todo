@@ -30,7 +30,7 @@
   },
   "scripts": {
     "serve": "set PORT=4000 && react-scripts start",
-    "start": "nodemon ./src/server/server.js",
+    "start": "node ./src/server/server.js",
     "copy-files": "copyfiles -u 1 ./build/**/*.* src/server/public",
     "build": "react-scripts build && yarn run copy-files",
     "test": "react-scripts test",
